@@ -1,0 +1,9 @@
+name: ChestShopConfirmation
+version: 1.0
+main: me.droreo002.chestshopconfirmation.ChestShopConfirmation
+depend: [ChestShop, OreoCore]
+
+commands:
+  chestshopconfirmation:
+    aliases:
+      - csc

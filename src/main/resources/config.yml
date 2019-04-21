@@ -1,0 +1,105 @@
+Settings:
+  CommandSound:
+    success:
+      sound: ORB_PICKUP
+    error:
+      sound: ORB_PICKUP
+  # Enable plugin's functionality?
+  enableConfirmation: true
+  # The currency symbol
+  currencySymbol: '$'
+  # The plugin prefix
+  prefix: '&7[ &bConfirmation &7]&f '
+  # Should we enable the log file?
+  enableLogFile: true
+# Available key :
+    #  material > Material as string (String)
+    #   example > DIRT
+    #  itemID > The durability or item ID , useful for custom item texture or specifying item type(int)
+    #   example > 5
+    #  amount > The item amount (int)
+    #   example > 5
+    #  name > The item displayName (String)
+    #   example > '&7[ &bHello World &7]'
+    #  lore > The item lore (List String)
+    #   example > - 'Hello'
+    #             - 'World'
+    #  glow > Set the item glow or not (bool)
+    #   example > true or false
+    #  texture > The head texture url (String)
+    #   example > http://textures.minecraft.net/texture/d67470a0c18f6851e914353719e795877d29b3252f7e6bd4a1b865765bd74feb
+    # For material list you can find it here https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+Inventory:
+  Confirmation:
+    # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+    clickSound:
+      sound: CLICK
+    openSound:
+      sound: CHEST_OPEN
+    closeSound:
+      sound: CHEST_CLOSE
+    title: 'Confirmation'
+    FillEmpty:
+      # Should we fill it?
+      should: true
+      # The item. Format is same as above
+      item:
+        material: STAINED_GLASS_PANE
+        itemID: 7
+        name: '.'
+    AcceptButton:
+      slot: 10
+      material: WOOL
+      itemID: 5
+      name: '&a&lCONFIRM &7(Click&7)'
+      lore:
+        - '&8&m+--------------------+'
+        - '&r'
+        - '     &a&lSHOP INFORMATION'
+        - '&r'
+        - ' &b✿ &fOwner &8» &e%shop_owner%'
+        - ' &b✿ &f%transaction_type% Price &8» &e%currency_symbol%%price%'
+        - ' &b✿ &fItem &8» &e%item% &7(x%item_amount%&7)'
+        - '&r'
+        - '&7(You''re currently trying to &e%transaction_type% &7an item&7)'
+    DeclineButton:
+      slot: 16
+      material: WOOL
+      itemID: 14
+      name: '&c&lCANCEL &7(Click&7)'
+      lore:
+        - '&8&m+--------------------+'
+        - '&r'
+        - '&7(&b✿&7) &8» &fClick to close'
+  Information:
+    title: 'Information'
+    # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+    clickSound:
+      sound: CLICK
+    openSound:
+      sound: CHEST_OPEN
+    closeSound:
+      sound: CHEST_CLOSE
+    FillEmpty:
+      # Should we fill it?
+      should: true
+      # The item. Format is same as above
+      item:
+        material: STAINED_GLASS_PANE
+        itemID: 7
+        name: '.'
+    InformationButton:
+      material: PAPER
+      slot: 13
+      name: '&7[ &bInfo &7]'
+      lore:
+        - '&8&m+--------------------+'
+        - '&r'
+        - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
+Messages:
+  command:
+    no-permission: 'You don''t have the right permission to run this command!'
+    invalid-arg: 'Invalid command!'
+    config-reloaded: 'Config has been reloaded!'
+    confirmation-disabled: '&eConfirmation &fhas been &cdisabled &fglobally!'
+    confirmation-enabled: '&eConfirmation &fhas been &aenabled &fglobally!'
