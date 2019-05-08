@@ -38,7 +38,7 @@ public class ConfirmationInventory extends CustomInventory {
 
         final ItemStack fillItem = fromSection(memory.getIConfirmFillItem(), null);
         final ItemStack acceptButton = fromSection(memory.getIConfirmAcceptButton(), placeholder);
-        final ItemStack declineButton = fromSection(memory.getIConfirmDeclineButton(), null);
+        final ItemStack declineButton = fromSection(memory.getIConfirmDeclineButton(), placeholder);
 
         if (memory.isIConfirmFillEmpty()) addBorder(new int[] { 0, 1, 2 }, fillItem, false);
 

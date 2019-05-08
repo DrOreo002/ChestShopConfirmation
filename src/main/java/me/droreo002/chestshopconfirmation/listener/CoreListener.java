@@ -22,10 +22,11 @@ public class CoreListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPre(PreTransactionEvent event) {
         final ConfigManager.Memory memory = plugin.getConfigManager().getMemory();
         if (!memory.isEnableConfirmation()) return;
+        if (event.isCancelled()) return;
 
         final Sign sign = event.getSign();
         final String owner = sign.getLine(0);

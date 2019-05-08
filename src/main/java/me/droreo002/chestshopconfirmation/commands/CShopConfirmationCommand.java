@@ -16,7 +16,7 @@ public class CShopConfirmationCommand extends CustomCommand {
 
     private final ChestShopConfirmation plugin;
     private final ConfigManager.Memory memory;
-    private final List<String> tabCompletion; // TODO : Later
+    private final List<String> tabCompletion; // TODO : Later, also. Should be good if you continue developing the server. People are waiting
 
     public CShopConfirmationCommand(ChestShopConfirmation plugin) {
         super(plugin, "chestshopconfirmation", "csc");
