@@ -1,6 +1,7 @@
 package me.droreo002.chestshopconfirmation.commands;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
+import me.droreo002.chestshopconfirmation.commands.arg.HelpCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ReloadCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleCommand;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
@@ -16,7 +17,7 @@ public class CShopConfirmationCommand extends CustomCommand {
 
     private final ChestShopConfirmation plugin;
     private final ConfigManager.Memory memory;
-    private final List<String> tabCompletion; // TODO : Later, also. Should be good if you continue developing the server. People are waiting
+    private final List<String> tabCompletion;
 
     public CShopConfirmationCommand(ChestShopConfirmation plugin) {
         super(plugin, "chestshopconfirmation", "csc");
@@ -26,10 +27,15 @@ public class CShopConfirmationCommand extends CustomCommand {
 
         setErrorSound(memory.getCmdErrorSound());
         setSuccessSound(memory.getCmdSuccessSound());
-        setArgumentNotFoundMessage(memory.getMsgInvalidArg());
+        setArgumentNotFoundMessage(memory.getPrefix() + memory.getMsgInvalidArg());
+
+        tabCompletion.add("reload");
+        tabCompletion.add("toggle");
+        tabCompletion.add("help");
 
         addArgument(new ReloadCommand(this, memory, plugin));
         addArgument(new ToggleCommand(this, memory));
+        addArgument(new HelpCommand(this, memory));
 
         CustomCommandManager.registerCommand(plugin, this);
     }
@@ -46,7 +52,10 @@ public class CShopConfirmationCommand extends CustomCommand {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if (args.length == 1) {
+            return createReturnList(tabCompletion, args[0]);
+        }
         return null;
     }
 }

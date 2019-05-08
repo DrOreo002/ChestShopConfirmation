@@ -5,12 +5,12 @@ import me.droreo002.oreocore.commands.CommandArg;
 import me.droreo002.oreocore.commands.CustomCommand;
 import org.bukkit.command.CommandSender;
 
-public class ToggleCommand extends CommandArg {
+public class HelpCommand extends CommandArg {
 
     private final ConfigManager.Memory memory;
 
-    public ToggleCommand(CustomCommand parent, ConfigManager.Memory memory) {
-        super("toggle", parent);
+    public HelpCommand(CustomCommand parent, ConfigManager.Memory memory) {
+        super("help", parent);
         this.memory = memory;
 
         setPermission("csc.admin", memory.getPrefix() + memory.getMsgNoPermission());
@@ -18,13 +18,6 @@ public class ToggleCommand extends CommandArg {
 
     @Override
     public void execute(CommandSender commandSender, String[] strings) {
-        if (memory.isEnableConfirmation()) {
-            memory.setEnableConfirmation(false);
-            sendMessage(commandSender, memory.getMsgConfirmationDisabled());
-        } else {
-            memory.setEnableConfirmation(true);
-            sendMessage(commandSender, memory.getMsgConfirmationEnabled());
-        }
-        success(commandSender);
+        sendMessage(commandSender, "You can find information about this plugin on &7(&ehttps://github.com/DrOreo002/ChestShopConfirmation/wiki&7)");
     }
 }

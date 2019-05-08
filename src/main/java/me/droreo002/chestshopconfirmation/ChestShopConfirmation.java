@@ -1,6 +1,7 @@
 package me.droreo002.chestshopconfirmation;
 
 import lombok.Getter;
+import me.droreo002.chestshopconfirmation.bstats.Metrics;
 import me.droreo002.chestshopconfirmation.commands.CShopConfirmationCommand;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.debug.Debug;
@@ -21,6 +22,8 @@ public class ChestShopConfirmation extends JavaPlugin {
     private ConfigManager configManager;
     @Getter
     private Debugger debug;
+    @Getter
+    private Metrics metrics;
 
     @Override
     public void onEnable() {
@@ -28,6 +31,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         instance = this;
         configManager = new ConfigManager(this);
         debug = new Debug(this);
+        metrics = new Metrics(this);
 
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
         out.println(" ");

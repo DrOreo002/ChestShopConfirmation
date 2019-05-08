@@ -100,6 +100,7 @@ Messages:
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'
+    help: ''
     config-reloaded: 'Config has been reloaded!'
     confirmation-disabled: '&eConfirmation &fhas been &cdisabled &fglobally!'
     confirmation-enabled: '&eConfirmation &fhas been &aenabled &fglobally!'
