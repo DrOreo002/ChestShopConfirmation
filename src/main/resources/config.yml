@@ -12,6 +12,10 @@ Settings:
   prefix: '&7[ &bConfirmation &7]&f '
   # Should we enable the log file?
   enableLogFile: true
+  # Transaction type translation, also support for special character and color
+  transactionType:
+    BUY: 'Buy'
+    SELL: 'Sell'
 # Available key :
     #  material > Material as string (String)
     #   example > DIRT
@@ -47,6 +51,7 @@ Inventory:
         material: STAINED_GLASS_PANE
         itemID: 7
         name: '.'
+    enablePreview: true
     AcceptButton:
       slot: 10
       material: WOOL
@@ -55,13 +60,7 @@ Inventory:
       lore:
         - '&8&m+--------------------+'
         - '&r'
-        - '     &a&lSHOP INFORMATION'
-        - '&r'
-        - ' &b✿ &fOwner &8» &e%shop_owner%'
-        - ' &b✿ &f%transaction_type% Price &8» &e%currency_symbol%%price%'
-        - ' &b✿ &fItem &8» &e%item% &7(x%item_amount%&7)'
-        - '&r'
-        - '&7(You''re currently trying to &e%transaction_type% &7an item&7)'
+        - '&7(&b✿&7) &8» &fClick to &e%transaction_type%'
     DeclineButton:
       slot: 16
       material: WOOL
@@ -71,6 +70,21 @@ Inventory:
         - '&8&m+--------------------+'
         - '&r'
         - '&7(&b✿&7) &8» &fClick to close'
+    ItemPreviewButton:
+      slot: 13
+      material: DIRT # Don't worry, this will change. Depending on what item is inside
+      name: '&7[&e%transaction_type%&7] &8» &f%item_name%' # This will rename the item display preview. You can use %item_name% to use the default item name / display name
+      lore:
+        - '&8&m+--------------------+'
+        - '&r'
+        - ' &b✿ &fOwner &8» &e%shop_owner%'
+        - ' &b✿ &f%transaction_type% Price &8» &e%currency_symbol%%price%'
+        - ' &b✿ &fItem &8» &e%item% &7(x%item_amount%&7)'
+        - '&r'
+        - '&8&m+--------------------+'
+        - '&r'
+        - '&b✿ &fItem Lore &8»'
+        - '%item_lore%' # You can remove this if you want to
   Information:
     title: 'Information'
     # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
@@ -100,7 +114,6 @@ Messages:
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'
-    help: ''
     config-reloaded: 'Config has been reloaded!'
     confirmation-disabled: '&eConfirmation &fhas been &cdisabled &fglobally!'
     confirmation-enabled: '&eConfirmation &fhas been &aenabled &fglobally!'

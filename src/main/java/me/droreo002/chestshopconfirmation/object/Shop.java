@@ -2,7 +2,9 @@ package me.droreo002.chestshopconfirmation.object;
 
 import com.Acrobot.ChestShop.Events.TransactionEvent;
 import lombok.Getter;
+import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 public class Shop {
@@ -27,5 +29,17 @@ public class Shop {
         this.item = item;
         this.price = price;
         this.shopType = shopType;
+    }
+
+    public String getShopTypeAsString() {
+        final ConfigurationSection cs = ChestShopConfirmation.getInstance().getConfigManager().getMemory().getTransactionTypeTranslation();
+        switch (shopType) {
+            case BUY:
+                return cs.getString(TransactionEvent.TransactionType.BUY.name());
+            case SELL:
+                return cs.getString(TransactionEvent.TransactionType.SELL.name());
+            default:
+                return "INVALID STRING, PLEASE CHECK CONFIG";
+        }
     }
 }

@@ -45,6 +45,10 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private boolean enableLogFile;
 
+        @ConfigVariable(path = "Settings.transactionType")
+        @Getter
+        private ConfigurationSection transactionTypeTranslation;
+
         /*
         Inventory
          */
@@ -58,6 +62,10 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private boolean iConfirmFillEmpty;
 
+        @ConfigVariable(path = "Inventory.Confirmation.enablePreview")
+        @Getter
+        private boolean iConfirmEnablePreview;
+
         @ConfigVariable(path = "Inventory.Confirmation.FillEmpty.item")
         @Getter
         private ConfigurationSection iConfirmFillItem;
@@ -70,6 +78,10 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private ConfigurationSection iConfirmDeclineButton;
 
+        @ConfigVariable(path = "Inventory.Confirmation.ItemPreviewButton")
+        @Getter
+        private ConfigurationSection iConfirmPreviewButton;
+
         @ConfigVariable(path = "Inventory.Confirmation.AcceptButton.slot")
         @Getter
         private int iConfirmAcceptButtonSlot;
@@ -77,6 +89,10 @@ public class ConfigManager extends CustomConfig {
         @ConfigVariable(path = "Inventory.Confirmation.DeclineButton.slot")
         @Getter
         private int iConfirmDeclineButtonSlot;
+
+        @ConfigVariable(path = "Inventory.Confirmation.ItemPreviewButton.slot")
+        @Getter
+        private int iConfirmPreviewButtonSlot;
 
 
         // Information inventory
