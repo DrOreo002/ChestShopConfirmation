@@ -2,6 +2,7 @@ package me.droreo002.chestshopconfirmation.inventory;
 
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
+import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.Shop;
 import me.droreo002.oreocore.inventory.api.CustomInventory;
@@ -14,19 +15,27 @@ import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import me.droreo002.oreocore.utils.list.ListUtils;
 import me.droreo002.oreocore.utils.strings.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Sign;
 
 import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
 
 public class ConfirmationInventory extends CustomInventory {
 
+    private final PreTransactionEvent preTransactionEvent;
+    private final ChestShopConfirmation plugin;
+
     public ConfirmationInventory(final Player player, final ConfigManager.Memory memory, final Shop shop, final PreTransactionEvent event) {
         super(27, memory.getIConfirmTitle());
+        this.plugin = ChestShopConfirmation.getInstance();
+        this.preTransactionEvent = event;
+
         final ItemStack shopItem = shop.getItem().clone();
 
         setSoundOnClick(memory.getConfirmClickSound());
@@ -67,6 +76,14 @@ public class ConfirmationInventory extends CustomInventory {
             close(player);
             TransactionEvent toCall = new TransactionEvent(event, shop.getSign());
             ServerUtils.callEvent(toCall);
+
+            // Remove chest on use
+            Sign sign = (Sign) event.getSign().getData();
+            Block attached = event.getSign().getBlock().getRelative(sign.getAttachedFace());
+
+            // Remove sign and block
+            plugin.getShopOnUse().remove(attached.getLocation());
+            plugin.getShopOnUse().remove(preTransactionEvent.getSign().getLocation());
         }), true);
         addButton(memory.getIConfirmDeclineButtonSlot(), new GUIButton(declineButton).setListener(GUIButton.CLOSE_LISTENER), true);
     }
@@ -78,11 +95,25 @@ public class ConfirmationInventory extends CustomInventory {
 
     @Override
     public void onClose(InventoryCloseEvent inventoryCloseEvent) {
+        // Remove chest on use
+        Sign sign = (Sign) preTransactionEvent.getSign().getData();
+        Block attached = preTransactionEvent.getSign().getBlock().getRelative(sign.getAttachedFace());
 
+        // Remove sign and block
+        plugin.getShopOnUse().remove(attached.getLocation());
+        plugin.getShopOnUse().remove(preTransactionEvent.getSign().getLocation());
     }
 
     @Override
     public void onOpen(InventoryOpenEvent inventoryOpenEvent) {
+        // Add to chest on use
+        Sign sign = (Sign) preTransactionEvent.getSign().getData();
+        Block attached = preTransactionEvent.getSign().getBlock().getRelative(sign.getAttachedFace());
+        if (plugin.getShopOnUse().contains(attached.getLocation())) return;
+        if (plugin.getShopOnUse().contains(preTransactionEvent.getSign().getLocation())) return;
 
+        // Add sign, and block
+        plugin.getShopOnUse().add(attached.getLocation());
+        plugin.getShopOnUse().add(preTransactionEvent.getSign().getLocation());
     }
 }

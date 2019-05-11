@@ -111,6 +111,7 @@ Inventory:
         - '&r'
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
 Messages:
+  cant-open-chest: '&fCan''t do that right now..'
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'

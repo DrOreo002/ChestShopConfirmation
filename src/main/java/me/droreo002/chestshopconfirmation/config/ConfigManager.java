@@ -175,6 +175,10 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private String msgConfirmationDisabled;
 
+        @ConfigVariable(path = "Messages.cant-open-chest")
+        @Getter
+        private String msgCantOpenChest;
+
 
         Memory(CustomConfig parent) {
             this.parent = parent;
