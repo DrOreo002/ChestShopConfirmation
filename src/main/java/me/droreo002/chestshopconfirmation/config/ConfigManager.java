@@ -5,11 +5,14 @@ import lombok.Setter;
 import me.droreo002.oreocore.configuration.ConfigMemory;
 import me.droreo002.oreocore.configuration.CustomConfig;
 import me.droreo002.oreocore.configuration.annotations.ConfigVariable;
+import me.droreo002.oreocore.enums.Currency;
 import me.droreo002.oreocore.utils.misc.SoundObject;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigManager extends CustomConfig {
 
@@ -20,11 +23,24 @@ public class ConfigManager extends CustomConfig {
         super(plugin, new File(plugin.getDataFolder(), "config.yml"));
         this.memory = new Memory(this);
         registerMemory(memory);
+
+        // Setup memory value
+        for (String s : memory.getPriceFormatSettings().getKeys(false)) {
+            Currency c = Currency.getCurrency(s);
+            if (c == null) continue;
+            memory.getPriceFormat().put(c, memory.getPriceFormatSettings().getString(s));
+        }
     }
 
     public class Memory implements ConfigMemory {
 
         private final CustomConfig parent;
+
+        /*
+        Other value
+         */
+        @Getter
+        private final Map<Currency, String> priceFormat;
 
         /*
         Settings
@@ -48,6 +64,14 @@ public class ConfigManager extends CustomConfig {
         @ConfigVariable(path = "Settings.transactionType")
         @Getter
         private ConfigurationSection transactionTypeTranslation;
+
+        @ConfigVariable(path = "Settings.PriceFormat")
+        @Getter
+        private ConfigurationSection priceFormatSettings;
+
+        @ConfigVariable(path = "Settings.PriceFormat.enable")
+        @Getter
+        private boolean enablePriceFormat;
 
         /*
         Inventory
@@ -182,6 +206,7 @@ public class ConfigManager extends CustomConfig {
 
         Memory(CustomConfig parent) {
             this.parent = parent;
+            this.priceFormat = new HashMap<>();
         }
 
         @Override

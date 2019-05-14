@@ -1,5 +1,6 @@
 package me.droreo002.chestshopconfirmation;
 
+import com.Acrobot.ChestShop.Configuration.Properties;
 import lombok.Getter;
 import me.droreo002.chestshopconfirmation.bstats.Metrics;
 import me.droreo002.chestshopconfirmation.commands.CShopConfirmationCommand;
@@ -48,11 +49,13 @@ public class ChestShopConfirmation extends JavaPlugin {
         debug.log("&7> &fSetting up config.yml....", Level.INFO, false, true);
         debug.log("&7> &fRegistering commands...", Level.INFO, false, true);
         debug.log("&7> &fFinish!", Level.INFO, false, true);
+        if (Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is offline!. Please enable on ChestShop's config.yml to prevent duplication issue!, built-in anti duplication has been &aenabled!", Level.INFO, false, true);
         out.println(" ");
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
 
         new CShopConfirmationCommand(this);
         ServerUtils.registerListener(this, new CoreListener(this));
+
         OreoCore.getInstance().dependPlugin(this, false);
     }
 

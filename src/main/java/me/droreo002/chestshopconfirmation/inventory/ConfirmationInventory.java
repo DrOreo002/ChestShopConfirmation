@@ -2,6 +2,7 @@ package me.droreo002.chestshopconfirmation.inventory;
 
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
+import com.sun.org.apache.bcel.internal.generic.LOR;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.Shop;
@@ -45,9 +46,13 @@ public class ConfirmationInventory extends CustomInventory {
         final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.LORE, "%shop_owner%", shop.getOwner())
                 .add(ItemMetaType.LORE, "%item_amount%", String.valueOf(shop.getAmount()))
                 .add(ItemMetaType.LORE, "%currency_symbol%", memory.getCurrencySymbol())
-                .add(ItemMetaType.LORE, "%price%", Double.toString(shop.getPrice()))
                 .add(ItemMetaType.LORE, "%item%", shop.getItem().getType().toString())
                 .add(ItemMetaType.LORE, "%transaction_type%", color(shop.getShopTypeAsString()));
+        if (memory.isEnablePriceFormat()) {
+            placeholder.add(ItemMetaType.LORE, "%price%", StringUtils.formatToReadable(new Double(shop.getPrice()).longValue(), memory.getPriceFormat()));
+        } else {
+            placeholder.add(ItemMetaType.LORE, "%price%", Double.toString(shop.getPrice()));
+        }
 
         final ItemStack fillItem = fromSection(memory.getIConfirmFillItem(), null);
         final ItemStack acceptButton = fromSection(memory.getIConfirmAcceptButton(), placeholder);

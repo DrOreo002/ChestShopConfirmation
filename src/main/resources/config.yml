@@ -16,6 +16,13 @@ Settings:
   transactionType:
     BUY: 'Buy'
     SELL: 'Sell'
+  # The price format. This will format the price from 1000 to 1k!
+  PriceFormat:
+    enable: true # Please be aware that the number will not be 100% precise!. For example 125.6 will not always be 125.6. It could change to 125!
+    THOUSANDS: 'k'
+    MILLIONS: 'M'
+    BILLIONS: 'B'
+    TRILLIONS: 'T'
 # Available key :
     #  material > Material as string (String)
     #   example > DIRT
