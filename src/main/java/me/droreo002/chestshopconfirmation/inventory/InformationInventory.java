@@ -8,9 +8,6 @@ import me.droreo002.oreocore.utils.item.CustomItem;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import me.droreo002.oreocore.utils.strings.StringUtils;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class InformationInventory extends CustomInventory {
@@ -29,21 +26,6 @@ public class InformationInventory extends CustomInventory {
 
         if (memory.isIInformationFillEmpty()) addBorder(new int[] { 0, 1, 2 }, fill, false);
 
-        addButton(memory.getIInformationInfoButtonSlot(), new GUIButton(infoSign).setListener(GUIButton.CLOSE_LISTENER), true);
-    }
-
-    @Override
-    public void onClick(InventoryClickEvent inventoryClickEvent) {
-
-    }
-
-    @Override
-    public void onClose(InventoryCloseEvent inventoryCloseEvent) {
-
-    }
-
-    @Override
-    public void onOpen(InventoryOpenEvent inventoryOpenEvent) {
-
+        addButton(new GUIButton(infoSign, memory.getIInformationInfoButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
     }
 }

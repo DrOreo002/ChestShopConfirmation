@@ -74,11 +74,11 @@ public class ConfirmationInventory extends CustomInventory {
             previewPlaceholder.addAll(placeholder);
             ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), previewPlaceholder);
             previewButton.setType(shopItem.getType()); // Because the default is AIR
-            addButton(memory.getIConfirmPreviewButtonSlot(), new GUIButton(previewButton).setListener(GUIButton.CLOSE_LISTENER), true);
+            addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
         }
 
-        addButton(memory.getIConfirmAcceptButtonSlot(), new GUIButton(acceptButton).setListener(inventoryClickEvent -> {
-            close(player);
+        addButton(new GUIButton(acceptButton, memory.getIConfirmAcceptButtonSlot()).setListener(inventoryClickEvent -> {
+            closeInventory(player);
             TransactionEvent toCall = new TransactionEvent(event, shop.getSign());
             ServerUtils.callEvent(toCall);
 
@@ -90,7 +90,7 @@ public class ConfirmationInventory extends CustomInventory {
             plugin.getShopOnUse().remove(attached.getLocation());
             plugin.getShopOnUse().remove(preTransactionEvent.getSign().getLocation());
         }), true);
-        addButton(memory.getIConfirmDeclineButtonSlot(), new GUIButton(declineButton).setListener(GUIButton.CLOSE_LISTENER), true);
+        addButton(new GUIButton(declineButton, memory.getIConfirmDeclineButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
     }
 
     @Override
