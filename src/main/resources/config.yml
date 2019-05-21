@@ -40,6 +40,11 @@ Settings:
     #  texture > The head texture url (String)
     #   example > http://textures.minecraft.net/texture/d67470a0c18f6851e914353719e795877d29b3252f7e6bd4a1b865765bd74feb
     # For material list you can find it here https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  # The confirmation will only open if this requirement are met
+  # Syntax : <world, all>:<BUY, SELL, BOTH, DISABLED>
+  ConfirmationOpenRule:
+    - 'all:BOTH' # Will open on every world for both transaction type, its recommended to keep this one here
+    - 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'
 Inventory:
   Confirmation:
     # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
@@ -119,6 +124,7 @@ Inventory:
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
 Messages:
   cant-open-chest: '&fCan''t do that right now..'
+  confirmation-world-disabled: '&fShop confirmation for shop type &e%shopType &fare disabled in this world'
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'

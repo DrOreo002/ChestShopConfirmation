@@ -2,6 +2,7 @@ package me.droreo002.chestshopconfirmation.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.oreocore.configuration.ConfigMemory;
 import me.droreo002.oreocore.configuration.CustomConfig;
 import me.droreo002.oreocore.configuration.annotations.ConfigVariable;
@@ -11,7 +12,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfigManager extends CustomConfig {
@@ -23,12 +26,29 @@ public class ConfigManager extends CustomConfig {
         super(plugin, new File(plugin.getDataFolder(), "config.yml"));
         this.memory = new Memory(this);
         registerMemory(memory);
+        setupMemory();
+    }
 
+    @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+        setupMemory();
+    }
+
+    private void setupMemory() {
         // Setup memory value
+        memory.getPriceFormat().clear();
+        memory.getOpenRule().clear();
+
         for (String s : memory.getPriceFormatSettings().getKeys(false)) {
             Currency c = Currency.getCurrency(s);
             if (c == null) continue;
             memory.getPriceFormat().put(c, memory.getPriceFormatSettings().getString(s));
+        }
+
+        for (String s : memory.getOpenRuleSyntax()) {
+            OpenRule rule = new OpenRule(s);
+            memory.getOpenRule().add(rule);
         }
     }
 
@@ -41,6 +61,9 @@ public class ConfigManager extends CustomConfig {
          */
         @Getter
         private final Map<Currency, String> priceFormat;
+
+        @Getter
+        private final List<OpenRule> openRule;
 
         /*
         Settings
@@ -72,6 +95,10 @@ public class ConfigManager extends CustomConfig {
         @ConfigVariable(path = "Settings.PriceFormat.enable")
         @Getter
         private boolean enablePriceFormat;
+
+        @ConfigVariable(path = "Settings.ConfirmationOpenRule")
+        @Getter
+        private List<String> openRuleSyntax;
 
         /*
         Inventory
@@ -203,10 +230,15 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private String msgCantOpenChest;
 
+        @ConfigVariable(path = "Messages.confirmation-world-disabled")
+        @Getter
+        private String msgConfirmationWorldDisabled;
+
 
         Memory(CustomConfig parent) {
             this.parent = parent;
             this.priceFormat = new HashMap<>();
+            this.openRule = new ArrayList<>();
         }
 
         @Override

@@ -6,8 +6,10 @@ import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.inventory.ConfirmationInventory;
 import me.droreo002.chestshopconfirmation.inventory.InformationInventory;
+import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.chestshopconfirmation.object.Shop;
 import me.droreo002.oreocore.enums.XMaterial;
+import me.droreo002.oreocore.utils.item.complex.UMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -18,6 +20,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class CoreListener implements Listener {
 
@@ -35,17 +39,48 @@ public class CoreListener implements Listener {
 
         final Sign sign = event.getSign();
         final String owner = sign.getLine(0);
-        final int amount = Integer.valueOf(sign.getLine(1));
         final double price = event.getPrice();
         final ItemStack item = event.getStock()[0];
         final TransactionEvent.TransactionType type = event.getTransactionType();
         final Player client = event.getClient();
+        final int amount = item.getAmount();
+        final List<OpenRule> openRules = memory.getOpenRule();
+
+        boolean cancel = false;
+        // Check for 'all' first
+        for (OpenRule rule : openRules) {
+            if (rule.getWorld().equals("all")) {
+                if (rule.getTransactionType() == OpenRule.TransactionType.DISABLED) {
+                    cancel = true;
+                    break;
+                }
+                if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) break;
+                if (!rule.getTransactionType().toString().equals(type.toString())) {
+                    cancel = true;
+                    break;
+                }
+                break;
+            }
+        }
+
+        // Try to check on other
+        for (OpenRule rule : openRules) {
+            if (rule.getWorld().equals(client.getWorld().getName())) {
+                if (rule.getTransactionType() == OpenRule.TransactionType.DISABLED) cancel = true;
+                if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) continue;
+                if (!rule.getTransactionType().toString().equals(type.toString())) cancel = true;
+            }
+        }
 
         /*
         TODO : Ability to not use confirmation. Next update
          */
 
         event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
+        if (cancel) {
+            plugin.sendMessage(client, memory.getMsgConfirmationWorldDisabled().replace("%shopType", type.toString()));
+            return;
+        }
 
         if (price < 0) {
             new InformationInventory(memory, type).openAsync(client);  // Just in case if there's a textured head
@@ -62,9 +97,9 @@ public class CoreListener implements Listener {
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.getClickedBlock() == null) return;
         final Material clickType = event.getClickedBlock().getType();
-        if (!clickType.equals(XMaterial.CHEST.parseMaterial())
-                && !clickType.equals(XMaterial.SIGN.parseMaterial())
-                && !clickType.equals(XMaterial.WALL_SIGN.parseMaterial())) return;
+        if (!clickType.equals(UMaterial.CHEST.getMaterial())
+                && !clickType.equals(UMaterial.SIGN.getMaterial())
+                && !clickType.equals(UMaterial.WALL_SIGN.getMaterial())) return;
         final Player player = event.getPlayer();
         final Block block = event.getClickedBlock();
 
