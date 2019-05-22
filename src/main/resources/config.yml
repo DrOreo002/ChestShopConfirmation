@@ -16,6 +16,8 @@ Settings:
   transactionType:
     BUY: 'Buy'
     SELL: 'Sell'
+    SELL_STACK: 'Sell Stack'
+    BUY_STACK: 'Buy Stack'
   # The price format. This will format the price from 1000 to 1k!
   PriceFormat:
     enable: true # Please be aware that the number will not be 100% precise!. For example 125.6 will not always be 125.6. It could change to 125!
@@ -41,7 +43,7 @@ Settings:
     #   example > http://textures.minecraft.net/texture/d67470a0c18f6851e914353719e795877d29b3252f7e6bd4a1b865765bd74feb
     # For material list you can find it here https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
   # The confirmation will only open if this requirement are met
-  # Syntax : <world, all>:<BUY, SELL, BOTH, DISABLED>
+  # Syntax : <world, all>:<BUY, SELL, SELL_STACK, BUY_STACK, BOTH, DISABLED>
   ConfirmationOpenRule:
     - 'all:BOTH' # Will open on every world for both transaction type, its recommended to keep this one here
     - 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'

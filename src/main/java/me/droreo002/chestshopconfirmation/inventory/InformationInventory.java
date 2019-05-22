@@ -2,6 +2,7 @@ package me.droreo002.chestshopconfirmation.inventory;
 
 import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.oreocore.inventory.api.CustomInventory;
 import me.droreo002.oreocore.inventory.api.GUIButton;
 import me.droreo002.oreocore.utils.item.CustomItem;
@@ -12,14 +13,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class InformationInventory extends CustomInventory {
 
-    public InformationInventory(final ConfigManager.Memory memory, final TransactionEvent.TransactionType type) {
+    public InformationInventory(final ConfigManager.Memory memory, final OpenRule.TransactionType type) {
         super(27, memory.getIInformationTitle());
 
         setSoundOnClick(memory.getInfoClickSound());
         setSoundOnOpen(memory.getInfoOpenSound());
         setSoundOnClose(memory.getInfoCloseSound());
 
-        final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.LORE, "%transaction_type%", StringUtils.upperCaseFirstLetter(type.toString().toLowerCase()));
+        final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.LORE, "%transaction_type%", type.asTranslatedString());
 
         final ItemStack infoSign = CustomItem.fromSection(memory.getIInformationInfoButton(), placeholder);
         final ItemStack fill = CustomItem.fromSection(memory.getIInformationFillItem(), null);

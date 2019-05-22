@@ -47,7 +47,7 @@ public class ConfirmationInventory extends CustomInventory {
                 .add(ItemMetaType.LORE, "%item_amount%", String.valueOf(shop.getAmount()))
                 .add(ItemMetaType.LORE, "%currency_symbol%", memory.getCurrencySymbol())
                 .add(ItemMetaType.LORE, "%item%", shop.getItem().getType().toString())
-                .add(ItemMetaType.LORE, "%transaction_type%", color(shop.getShopTypeAsString()));
+                .add(ItemMetaType.LORE, "%transaction_type%", color(shop.getShopType().asTranslatedString()));
         if (memory.isEnablePriceFormat()) {
             placeholder.add(ItemMetaType.LORE, "%price%", StringUtils.formatToReadable(new Double(shop.getPrice()).longValue(), memory.getPriceFormat()));
         } else {

@@ -41,7 +41,10 @@ public class CoreListener implements Listener {
         final String owner = sign.getLine(0);
         final double price = event.getPrice();
         final ItemStack item = event.getStock()[0];
-        final TransactionEvent.TransactionType type = event.getTransactionType();
+        OpenRule.TransactionType transactionType = OpenRule.TransactionType.tryGet(event.getTransactionType().name());
+        if (transactionType == null) throw new NullPointerException("Failed  to get Transaction type!. Please report this to devs!");
+        if (transactionType == OpenRule.TransactionType.SELL && item.getAmount() == item.getMaxStackSize()) transactionType = OpenRule.TransactionType.SELL_STACK;
+        if (transactionType == OpenRule.TransactionType.BUY && item.getAmount() == item.getMaxStackSize()) transactionType = OpenRule.TransactionType.BUY_STACK;
         final Player client = event.getClient();
         final int amount = item.getAmount();
         final List<OpenRule> openRules = memory.getOpenRule();
@@ -55,7 +58,7 @@ public class CoreListener implements Listener {
                     break;
                 }
                 if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) break;
-                if (!rule.getTransactionType().toString().equals(type.toString())) {
+                if (!rule.getTransactionType().equals(transactionType)) {
                     cancel = true;
                     break;
                 }
@@ -68,7 +71,7 @@ public class CoreListener implements Listener {
             if (rule.getWorld().equals(client.getWorld().getName())) {
                 if (rule.getTransactionType() == OpenRule.TransactionType.DISABLED) cancel = true;
                 if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) continue;
-                if (!rule.getTransactionType().toString().equals(type.toString())) cancel = true;
+                if (!rule.getTransactionType().equals(transactionType)) cancel = true;
             }
         }
 
@@ -78,15 +81,16 @@ public class CoreListener implements Listener {
 
         event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
         if (cancel) {
-            plugin.sendMessage(client, memory.getMsgConfirmationWorldDisabled().replace("%shopType", type.toString()));
+            plugin.sendMessage(client, memory.getMsgConfirmationWorldDisabled().replace("%shopType", transactionType.asTranslatedString()));
             return;
         }
 
         if (price < 0) {
-            new InformationInventory(memory, type).openAsync(client);  // Just in case if there's a textured head
+            new InformationInventory(memory, transactionType).openAsync(client);  // Just in case if there's a textured head
             return;
         }
-        final Shop shop = new Shop(sign, owner, amount, item, price, type);
+
+        final Shop shop = new Shop(sign, owner, amount, item, price, transactionType);
         new ConfirmationInventory(client, memory, shop, event).openAsync(client); // Just in case if there's a textured head
     }
 
