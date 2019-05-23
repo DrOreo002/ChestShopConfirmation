@@ -25,8 +25,7 @@ public class OpenRule {
         SELL,
         SELL_STACK,
         BUY_STACK,
-        BOTH,
-        DISABLED;
+        ALL;
 
         public static TransactionType tryGet(String s) {
             try {

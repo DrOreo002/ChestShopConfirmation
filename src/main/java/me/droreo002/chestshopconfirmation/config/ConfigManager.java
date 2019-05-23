@@ -230,11 +230,6 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private String msgCantOpenChest;
 
-        @ConfigVariable(path = "Messages.confirmation-world-disabled")
-        @Getter
-        private String msgConfirmationWorldDisabled;
-
-
         Memory(CustomConfig parent) {
             this.parent = parent;
             this.priceFormat = new HashMap<>();

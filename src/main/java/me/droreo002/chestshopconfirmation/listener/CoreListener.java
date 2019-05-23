@@ -53,11 +53,7 @@ public class CoreListener implements Listener {
         // Check for 'all' first
         for (OpenRule rule : openRules) {
             if (rule.getWorld().equals("all")) {
-                if (rule.getTransactionType() == OpenRule.TransactionType.DISABLED) {
-                    cancel = true;
-                    break;
-                }
-                if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) break;
+                if (rule.getTransactionType() == OpenRule.TransactionType.ALL) break;
                 if (!rule.getTransactionType().equals(transactionType)) {
                     cancel = true;
                     break;
@@ -69,8 +65,7 @@ public class CoreListener implements Listener {
         // Try to check on other
         for (OpenRule rule : openRules) {
             if (rule.getWorld().equals(client.getWorld().getName())) {
-                if (rule.getTransactionType() == OpenRule.TransactionType.DISABLED) cancel = true;
-                if (rule.getTransactionType() == OpenRule.TransactionType.BOTH) continue;
+                if (rule.getTransactionType() == OpenRule.TransactionType.ALL) continue;
                 if (!rule.getTransactionType().equals(transactionType)) cancel = true;
             }
         }
@@ -79,10 +74,12 @@ public class CoreListener implements Listener {
         TODO : Ability to not use confirmation. Next update
          */
 
-        event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
         if (cancel) {
-            plugin.sendMessage(client, memory.getMsgConfirmationWorldDisabled().replace("%shopType", transactionType.asTranslatedString()));
+            // Make ChestShop handle the transaction
             return;
+        } else {
+            // Continue confirmation and cancel the main event
+            event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
         }
 
         if (price < 0) {
