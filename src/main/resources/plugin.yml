@@ -1,5 +1,5 @@
 name: ChestShopConfirmation
-version: 1.8
+version: 1.9
 main: me.droreo002.chestshopconfirmation.ChestShopConfirmation
 depend: [ChestShop, OreoCore]
 

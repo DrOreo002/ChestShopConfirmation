@@ -70,6 +70,18 @@ public class CoreListener implements Listener {
             }
         }
 
+        // Change if the transaction type is ALL
+        if (transactionType == OpenRule.TransactionType.ALL) {
+            switch (event.getTransactionType()) {
+                case BUY:
+                    transactionType = OpenRule.TransactionType.BUY;
+                    break;
+                case SELL:
+                    transactionType = OpenRule.TransactionType.SELL;
+                    break;
+            }
+        }
+
         /*
         TODO : Ability to not use confirmation. Next update
          */

@@ -37,6 +37,7 @@ public class OpenRule {
 
         public String asTranslatedString() {
             final ConfigurationSection cs = ChestShopConfirmation.getInstance().getConfigManager().getMemory().getTransactionTypeTranslation();
+            if (cs.getString(name()) == null) throw new NullPointerException("Failed to get shop type's translation (" + name() + "). Please check the config!");
             return cs.getString(name());
         }
     }
