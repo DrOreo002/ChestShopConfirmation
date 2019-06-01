@@ -111,8 +111,7 @@ public class CoreListener implements Listener {
         if (event.getClickedBlock() == null) return;
         final Material clickType = event.getClickedBlock().getType();
         if (!clickType.equals(UMaterial.CHEST.getMaterial())
-                && !clickType.equals(UMaterial.SIGN.getMaterial())
-                && !clickType.equals(UMaterial.WALL_SIGN.getMaterial())) return;
+                && !clickType.toString().contains("SIGN")) return;
         final Player player = event.getPlayer();
         final Block block = event.getClickedBlock();
 

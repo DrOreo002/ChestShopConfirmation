@@ -1,6 +1,5 @@
 package me.droreo002.chestshopconfirmation.inventory;
 
-import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.oreocore.inventory.api.CustomInventory;
@@ -8,7 +7,6 @@ import me.droreo002.oreocore.inventory.api.GUIButton;
 import me.droreo002.oreocore.utils.item.CustomItem;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
-import me.droreo002.oreocore.utils.strings.StringUtils;
 import org.bukkit.inventory.ItemStack;
 
 public class InformationInventory extends CustomInventory {
