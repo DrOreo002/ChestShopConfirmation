@@ -6,9 +6,14 @@ import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.inventory.ConfirmationInventory;
 import me.droreo002.chestshopconfirmation.inventory.InformationInventory;
+import me.droreo002.chestshopconfirmation.listener.backward.InteractListener;
+import me.droreo002.chestshopconfirmation.listener.backward.InteractListener_1_8_R;
+import me.droreo002.chestshopconfirmation.listener.backward.OnInteractHandler;
 import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.chestshopconfirmation.object.Shop;
+import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.enums.XMaterial;
+import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.item.complex.UMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -105,19 +110,13 @@ public class CoreListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        final ConfigManager.Memory memory = plugin.getConfigManager().getMemory();
-        if (!memory.isEnableConfirmation()) return;
-        if (event.getHand() == EquipmentSlot.OFF_HAND) return;
-        if (event.getClickedBlock() == null) return;
-        final Material clickType = event.getClickedBlock().getType();
-        if (!clickType.equals(UMaterial.CHEST.getMaterial())
-                && !clickType.toString().contains("SIGN")) return;
-        final Player player = event.getPlayer();
-        final Block block = event.getClickedBlock();
-
-        if (plugin.getShopOnUse().contains(block.getLocation())) {
-            plugin.sendMessage(player, memory.getMsgCantOpenChest());
-            event.setCancelled(true);
+        final MinecraftVersion version = ServerUtils.getServerVersion();
+        OnInteractHandler handler;
+        if (version.name().contains("1_8")) {
+            handler = new InteractListener_1_8_R();
+        } else {
+            handler = new InteractListener();
         }
+        handler.onInteract(event);
     }
 }
