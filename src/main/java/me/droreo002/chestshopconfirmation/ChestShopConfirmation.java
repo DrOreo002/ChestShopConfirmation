@@ -36,6 +36,12 @@ public class ChestShopConfirmation extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+        if (ServerUtils.getPlugin("OreoCore") == null) {
+            throw new NullPointerException("Plugin need OreoCore to run! (Install guide https://github.com/DrOreo002/ChestShopConfirmation/wiki/Installing)");
+        }
+        if (ServerUtils.getPlugin("ChestShop") == null) {
+            throw new NullPointerException("Plugin need ChestShop to run! (Install guide https://github.com/DrOreo002/ChestShopConfirmation/wiki/Installing)");
+        }
         instance = this;
         configManager = new ConfigManager(this);
         debug = new Debug(this);
