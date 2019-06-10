@@ -46,8 +46,8 @@ Settings:
   # Syntax : <world, all>:<BUY, SELL, SELL_STACK, BUY_STACK, ALL>
   ConfirmationOpenRule:
     - 'all:ALL' # Will open on every world for both transaction type, its recommended to keep this one here
-    - 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'
-    - 'survival:BUY_STACK' # Will only open in world = survival and when the transaction type is BUY_STACK. This will override the 'all'
+    #- 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'
+    #- 'survival:BUY_STACK' # Will only open in world = survival and when the transaction type is BUY_STACK. This will override the 'all'
 Inventory:
   Confirmation:
     # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
