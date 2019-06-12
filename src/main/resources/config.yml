@@ -12,6 +12,8 @@ Settings:
   prefix: '&7[ &bConfirmation &7]&f '
   # Should we enable the log file?
   enableLogFile: true
+  # Timeout for right click request
+  rightClickTimeout: 5 # In second
   # Transaction type translation, also support for special character and color
   transactionType:
     BUY: 'Buy'
@@ -48,6 +50,8 @@ Settings:
     - 'all:ALL' # Will open on every world for both transaction type, its recommended to keep this one here
     #- 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'
     #- 'survival:BUY_STACK' # Will only open in world = survival and when the transaction type is BUY_STACK. This will override the 'all'
+  # If this set to true then player who have 'csc.bypass' permission will be able to bypass the confirmation gui!
+  AllowBypass: true
 Inventory:
   Confirmation:
     # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
@@ -85,6 +89,7 @@ Inventory:
         - '&8&m+--------------------+'
         - '&r'
         - '&7(&b✿&7) &8» &fClick to close'
+    # Available placeholder %item_lore% and %item_name% will work at display names and lores
     ItemPreviewButton:
       slot: 13
       material: DIRT # Don't worry, this will change. Depending on what item is inside
@@ -127,9 +132,19 @@ Inventory:
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
 Messages:
   cant-open-chest: '&fCan''t do that right now..'
+  right-click-to-disable: 'Right click on any shop to disable the confirmation for that shop. Time left &e%time second'
+  right-click-to-enable: 'Right click on any shop to enable the confirmation for that shop. Time left &e%time second'
+  confirmation-disabled: 'Confirmation has been &cdisabled &ffor every shop! (Your account only). Run this command again to &aenable'
+  confirmation-enabled: 'Confirmation has been &aenabled &ffor every shop! (Your account only). Run this command again to &cdisable'
+  shop-disabled: 'Confirmation for clicked shop has been &cdisabled!'
+  shop-enabled: 'Confirmation for clicked shop has been &aenabled!'
+  shop-already-disabled: 'Confirmation already disabled for that shop'
+  shop-already-enabled: 'Confirmation already enabled for that shop'
+  time-out: 'Time out!'
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'
     config-reloaded: 'Config has been reloaded!'
-    confirmation-disabled: '&eConfirmation &fhas been &cdisabled &fglobally!'
-    confirmation-enabled: '&eConfirmation &fhas been &aenabled &fglobally!'
+    confirmation-disabled-global: '&eConfirmation &fhas been &cdisabled &fglobally!'
+    confirmation-enabled-global: '&eConfirmation &fhas been &aenabled &fglobally!'
+    player-only: 'Player only command!'

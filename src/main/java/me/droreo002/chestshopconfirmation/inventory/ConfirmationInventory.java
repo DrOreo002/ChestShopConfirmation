@@ -22,6 +22,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Sign;
 
 import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
@@ -63,11 +64,9 @@ public class ConfirmationInventory extends CustomInventory {
         if (memory.isIConfirmEnablePreview()) {
             final TextPlaceholder previewPlaceholder = new TextPlaceholder(ItemMetaType.DISPLAY_NAME, "%item_name%", ItemUtils.getName(shopItem, false));
             if (shopItem.hasItemMeta()) {
-                if (shopItem.getItemMeta().hasLore()) {
-                    previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", shopItem.getItemMeta().getLore());
-                } else {
-                    previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", "");
-                }
+                // TODO : Update for per player confirmation and then push the update
+                previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getLore(shopItem, false));
+                previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getName(shopItem, true));
             } else {
                 previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", "");
             }

@@ -5,7 +5,9 @@ import lombok.Getter;
 import me.droreo002.chestshopconfirmation.bstats.Metrics;
 import me.droreo002.chestshopconfirmation.commands.CShopConfirmationCommand;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.database.PlayerDatabase;
 import me.droreo002.chestshopconfirmation.debug.Debug;
+import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.chestshopconfirmation.listener.CoreListener;
 import me.droreo002.oreocore.OreoCore;
 import me.droreo002.oreocore.debugging.Debugger;
@@ -15,8 +17,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 import static java.lang.System.*;
 
@@ -32,6 +37,10 @@ public class ChestShopConfirmation extends JavaPlugin {
     private Metrics metrics;
     @Getter
     private Set<Location> shopOnUse;
+    @Getter
+    private PlayerDatabase playerDatabase;
+    @Getter
+    private final Map<UUID, ClickRequestType> onClickRequest = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -47,6 +56,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         debug = new Debug(this);
         metrics = new Metrics(this);
         shopOnUse = new HashSet<>();
+        playerDatabase = new PlayerDatabase(this);
 
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
         out.println(" ");

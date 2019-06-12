@@ -16,7 +16,7 @@ public class ReloadCommand extends CommandArg {
         this.plugin = plugin;
         this.memory = memory;
 
-        setPermission("csc.admin", memory.getPrefix() + memory.getMsgNoPermission());
+        setPermission("csc.admin", memory.getMsgNoPermission());
     }
 
     @Override

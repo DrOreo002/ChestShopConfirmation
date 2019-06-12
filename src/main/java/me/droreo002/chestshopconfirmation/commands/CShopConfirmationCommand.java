@@ -1,9 +1,12 @@
 package me.droreo002.chestshopconfirmation.commands;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
+import me.droreo002.chestshopconfirmation.commands.arg.DisableShopCommand;
+import me.droreo002.chestshopconfirmation.commands.arg.EnableShopCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.HelpCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ReloadCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleCommand;
+import me.droreo002.chestshopconfirmation.commands.arg.ToggleGlobalCommand;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.oreocore.commands.CustomCommand;
 import me.droreo002.oreocore.commands.CustomCommandManager;
@@ -27,15 +30,21 @@ public class CShopConfirmationCommand extends CustomCommand {
 
         setErrorSound(memory.getCmdErrorSound());
         setSuccessSound(memory.getCmdSuccessSound());
-        setArgumentNotFoundMessage(memory.getPrefix() + memory.getMsgInvalidArg());
+        setArgumentNotFoundMessage(memory.getMsgInvalidArg());
 
         tabCompletion.add("reload");
         tabCompletion.add("toggle");
+        tabCompletion.add("toggle-global");
+        tabCompletion.add("disable-shop");
+        tabCompletion.add("enable-shop");
         tabCompletion.add("help");
 
         addArgument(new ReloadCommand(this, memory, plugin));
-        addArgument(new ToggleCommand(this, memory));
+        addArgument(new ToggleCommand(this, memory, plugin));
         addArgument(new HelpCommand(this, memory));
+        addArgument(new ToggleGlobalCommand(this, memory));
+        addArgument(new DisableShopCommand(this, memory, plugin));
+        addArgument(new EnableShopCommand(this, memory, plugin));
 
         CustomCommandManager.registerCommand(plugin, this);
     }

@@ -84,6 +84,10 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private boolean enableLogFile;
 
+        @ConfigVariable(path = "Settings.rightClickTimeout")
+        @Getter
+        private int rightClickTimeout;
+
         @ConfigVariable(path = "Settings.transactionType")
         @Getter
         private ConfigurationSection transactionTypeTranslation;
@@ -218,17 +222,57 @@ public class ConfigManager extends CustomConfig {
         @Getter
         private String msgConfigReloaded;
 
-        @ConfigVariable(path = "Messages.command.confirmation-enabled")
+        @ConfigVariable(path = "Messages.command.confirmation-enabled-global")
         @Getter
-        private String msgConfirmationEnabled;
+        private String msgConfirmationEnabledGlobal;
 
-        @ConfigVariable(path = "Messages.command.confirmation-disabled")
+        @ConfigVariable(path = "Messages.command.confirmation-disabled-global")
         @Getter
-        private String msgConfirmationDisabled;
+        private String msgConfirmationDisabledGlobal;
+
+        @ConfigVariable(path = "Messages.command.player-only")
+        @Getter
+        private String msgPlayerOnly;
 
         @ConfigVariable(path = "Messages.cant-open-chest")
         @Getter
         private String msgCantOpenChest;
+
+        @ConfigVariable(path = "Messages.right-click-to-disable")
+        @Getter
+        private String msgRClickToDisable;
+
+        @ConfigVariable(path = "Messages.right-click-to-enable")
+        @Getter
+        private String msgRClickToEnable;
+
+        @ConfigVariable(path = "Messages.confirmation-disabled")
+        @Getter
+        private String msgConfirmationDisabledSelf;
+
+        @ConfigVariable(path = "Messages.confirmation-enabled")
+        @Getter
+        private String msgConfirmationEnabledSelf;
+
+        @ConfigVariable(path = "Messages.shop-disabled")
+        @Getter
+        private String msgShopDisabled;
+
+        @ConfigVariable(path = "Messages.shop-enabled")
+        @Getter
+        private String msgShopEnabled;
+
+        @ConfigVariable(path = "Messages.shop-already-disabled")
+        @Getter
+        private String msgShopAlreadyDisabled;
+
+        @ConfigVariable(path = "Messages.shop-already-enabled")
+        @Getter
+        private String msgShopAlreadyEnabled;
+
+        @ConfigVariable(path = "Messages.time-out")
+        @Getter
+        private String msgTimeOut;
 
         Memory(CustomConfig parent) {
             this.parent = parent;

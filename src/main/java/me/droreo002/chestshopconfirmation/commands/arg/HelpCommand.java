@@ -13,7 +13,7 @@ public class HelpCommand extends CommandArg {
         super("help", parent);
         this.memory = memory;
 
-        setPermission("csc.admin", memory.getPrefix() + memory.getMsgNoPermission());
+        setPermission("csc.admin", memory.getMsgNoPermission());
     }
 
     @Override
