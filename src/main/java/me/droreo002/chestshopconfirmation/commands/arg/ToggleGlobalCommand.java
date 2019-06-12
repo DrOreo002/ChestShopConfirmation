@@ -13,7 +13,7 @@ public class ToggleGlobalCommand extends CommandArg {
         super("toggle-global", parent);
         this.memory = memory;
 
-        setPermission("csc.admin", memory.getPrefix() + memory.getMsgNoPermission());
+        setPermission("csc.admin", memory.getMsgNoPermission());
     }
 
     @Override

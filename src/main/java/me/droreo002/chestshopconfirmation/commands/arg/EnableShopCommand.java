@@ -20,7 +20,7 @@ public class EnableShopCommand extends CommandArg {
         this.plugin = plugin;
         this.memory = memory;
 
-        setPlayerOnly(true, "Player only command!");
+        setPlayerOnly(true, memory.getMsgPlayerOnly());
         setPermission("csc.enable-disable-shop", memory.getMsgNoPermission());
     }
 
