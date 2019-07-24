@@ -1,0 +1,71 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'java'
+}
+
+apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'maven-publish'
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+repositories {
+    mavenLocal()
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+
+    maven {
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+    maven {
+        url = 'http://repo.maven.apache.org/maven2'
+    }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT'
+    compileOnly 'me.droreo002:OreoCore:+'
+    compileOnly 'com.Acrobot:ChestShop:1.0' // This is manually installed dependency
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+}
+
+def pluginName = rootProject.name
+def spigotDirectory = "Spigot 1.13"
+
+group = 'me.droreo002'
+version = '2.5'
+targetCompatibility = '1.8'
+
+shadowJar {
+    archiveFileName = pluginName + '-' + project.version + '.jar'
+    destinationDirectory = file("C:\\Users\\Anom\\Desktop\\" + spigotDirectory + "\\plugins")
+
+    mergeServiceFiles()
+    dependencies {
+        include(dependency('co.aikar:.*'))
+        include(dependency('com.zaxxer:.*'))
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.yml'
+        filter(ReplaceTokens, tokens: [version: project.version])
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}

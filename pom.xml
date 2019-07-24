@@ -80,7 +80,7 @@
         <dependency>
             <groupId>me.droreo002</groupId>
             <artifactId>OreoCore</artifactId>
-            <version>1.0</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
