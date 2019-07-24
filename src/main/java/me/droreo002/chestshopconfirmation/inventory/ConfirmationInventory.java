@@ -2,27 +2,22 @@ package me.droreo002.chestshopconfirmation.inventory;
 
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
-import com.sun.org.apache.bcel.internal.generic.LOR;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.Shop;
-import me.droreo002.oreocore.inventory.api.CustomInventory;
-import me.droreo002.oreocore.inventory.api.GUIButton;
+import me.droreo002.oreocore.inventory.CustomInventory;
+import me.droreo002.oreocore.inventory.button.GUIButton;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
-import me.droreo002.oreocore.utils.item.CustomItem;
 import me.droreo002.oreocore.utils.item.ItemUtils;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
-import me.droreo002.oreocore.utils.list.ListUtils;
 import me.droreo002.oreocore.utils.strings.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Sign;
 
 import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
@@ -59,7 +54,7 @@ public class ConfirmationInventory extends CustomInventory {
         final ItemStack acceptButton = fromSection(memory.getIConfirmAcceptButton(), placeholder);
         final ItemStack declineButton = fromSection(memory.getIConfirmDeclineButton(), placeholder);
 
-        if (memory.isIConfirmFillEmpty()) addBorder(new int[] { 0, 1, 2 }, fillItem, false);
+        if (memory.isIConfirmFillEmpty()) addBorder(fillItem, false, 0, 1, 2);
 
         if (memory.isIConfirmEnablePreview()) {
             final TextPlaceholder previewPlaceholder = new TextPlaceholder(ItemMetaType.DISPLAY_NAME, "%item_name%", ItemUtils.getName(shopItem, false));

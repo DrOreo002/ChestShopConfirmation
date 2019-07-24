@@ -18,6 +18,7 @@ import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.enums.XMaterial;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.item.complex.UMaterial;
+import me.droreo002.oreocore.utils.misc.ThreadingUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -132,12 +133,13 @@ public class CoreListener implements Listener {
         }
 
         if (price < 0) {
-            new InformationInventory(memory, transactionType).openAsync(client);  // Just in case if there's a textured head
+            final OpenRule.TransactionType finalTransactionType = transactionType;
+            ThreadingUtils.makeChain().asyncFirst(() -> new InformationInventory(memory, finalTransactionType)).asyncLast(input -> input.open(client)).execute();
             return;
         }
 
         final Shop shop = new Shop(sign, owner, amount, item, price, transactionType);
-        new ConfirmationInventory(client, memory, shop, event).openAsync(client); // Just in case if there's a textured head
+        ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> input.open(client)).execute();
     }
 
     @EventHandler(priority = EventPriority.LOW)
