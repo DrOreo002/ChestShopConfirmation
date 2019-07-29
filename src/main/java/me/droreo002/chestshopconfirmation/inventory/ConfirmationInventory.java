@@ -14,7 +14,6 @@ import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import me.droreo002.oreocore.utils.strings.StringUtils;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +32,7 @@ public class ConfirmationInventory extends CustomInventory {
         this.plugin = ChestShopConfirmation.getInstance();
         this.preTransactionEvent = event;
 
-        final ItemStack shopItem = shop.getItem().clone();
+        final ItemStack shopItem = shop.getItem();
 
         setSoundOnClick(memory.getConfirmClickSound());
         setSoundOnOpen(memory.getConfirmOpenSound());
@@ -59,7 +58,6 @@ public class ConfirmationInventory extends CustomInventory {
         if (memory.isIConfirmEnablePreview()) {
             final TextPlaceholder previewPlaceholder = new TextPlaceholder(ItemMetaType.DISPLAY_NAME, "%item_name%", ItemUtils.getName(shopItem, false));
             if (shopItem.hasItemMeta()) {
-                // TODO : Update for per player confirmation and then push the update
                 previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getLore(shopItem, false));
                 previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getName(shopItem, true));
             } else {
@@ -68,6 +66,7 @@ public class ConfirmationInventory extends CustomInventory {
             previewPlaceholder.addAll(placeholder);
             ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), previewPlaceholder);
             previewButton.setType(shopItem.getType()); // Because the default is AIR
+            previewButton.setAmount(shop.getAmount());
             addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
         }
 
@@ -85,11 +84,6 @@ public class ConfirmationInventory extends CustomInventory {
             plugin.getShopOnUse().remove(preTransactionEvent.getSign().getLocation());
         }), true);
         addButton(new GUIButton(declineButton, memory.getIConfirmDeclineButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
-    }
-
-    @Override
-    public void onClick(InventoryClickEvent inventoryClickEvent) {
-
     }
 
     @Override

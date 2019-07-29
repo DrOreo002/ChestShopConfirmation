@@ -23,7 +23,7 @@ public class Shop {
         this.sign = sign;
         this.owner = owner;
         this.amount = amount;
-        this.item = item;
+        this.item = item.clone();
         this.price = price;
         this.shopType = shopType;
     }
