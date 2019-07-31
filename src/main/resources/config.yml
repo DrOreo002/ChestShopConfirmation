@@ -1,3 +1,4 @@
+ConfigVersion: 1.0 # Do not change!
 Settings:
   CommandSound:
     success:
@@ -61,7 +62,10 @@ Inventory:
       sound: CHEST_OPEN
     closeSound:
       sound: CHEST_CLOSE
-    title: 'Confirmation'
+    # Available placeholders:
+    # %item_name%, %transaction_type%
+    # %currency_symbol%, %item%, %price%
+    title: '&7[&e%transaction_type%&7]&f Confirm'
     FillEmpty:
       # Should we fill it?
       should: true
@@ -89,11 +93,13 @@ Inventory:
         - '&8&m+--------------------+'
         - '&r'
         - '&7(&b✿&7) &8» &fClick to close'
-    # Available placeholder %item_lore% and %item_name% will work at display names and lores
+    # Available placeholders:
+    # %item_lore%, %item_name%, %transaction_type%
+    # %currency_symbol%, %item%, %price%
     ItemPreviewButton:
       slot: 13
       material: DIRT # Don't worry, this will change. Depending on what item is inside
-      name: '&7[&e%transaction_type%&7] &8» &f%item_name%' # This will rename the item display preview. You can use %item_name% to use the default item name / display name
+      name: '&7[&e%transaction_type%&7] &8» &f%item_name%'
       lore:
         - '&8&m+--------------------+'
         - '&r'

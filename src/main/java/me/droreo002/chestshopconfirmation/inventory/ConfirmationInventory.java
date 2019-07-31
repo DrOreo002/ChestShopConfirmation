@@ -5,7 +5,7 @@ import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.Shop;
-import me.droreo002.oreocore.inventory.CustomInventory;
+import me.droreo002.oreocore.inventory.OreoInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.item.ItemUtils;
@@ -22,13 +22,13 @@ import org.bukkit.material.Sign;
 import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
 
-public class ConfirmationInventory extends CustomInventory {
+public class ConfirmationInventory extends OreoInventory {
 
     private final PreTransactionEvent preTransactionEvent;
     private final ChestShopConfirmation plugin;
 
     public ConfirmationInventory(final Player player, final ConfigManager.Memory memory, final Shop shop, final PreTransactionEvent event) {
-        super(27, memory.getIConfirmTitle());
+        super(27);
         this.plugin = ChestShopConfirmation.getInstance();
         this.preTransactionEvent = event;
 
@@ -38,17 +38,21 @@ public class ConfirmationInventory extends CustomInventory {
         setSoundOnOpen(memory.getConfirmOpenSound());
         setSoundOnClose(memory.getConfirmCloseSound());
 
-        final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.LORE, "%shop_owner%", shop.getOwner())
-                .add(ItemMetaType.LORE, "%item_amount%", String.valueOf(shop.getAmount()))
-                .add(ItemMetaType.LORE, "%currency_symbol%", memory.getCurrencySymbol())
-                .add(ItemMetaType.LORE, "%item%", shop.getItem().getType().toString())
-                .add(ItemMetaType.LORE, "%transaction_type%", color(shop.getShopType().asTranslatedString()));
+        final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.DISPLAY_AND_LORE, "%shop_owner%", shop.getOwner())
+                .add(ItemMetaType.DISPLAY_AND_LORE,"%item_amount%", String.valueOf(shop.getAmount()))
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%currency_symbol%", memory.getCurrencySymbol())
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item%", shop.getItem().getType().toString())
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%transaction_type%", color(shop.getShopType().asTranslatedString()))
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_name%", color(ItemUtils.getName(shopItem, true)))
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_lore%", ItemUtils.getLore(shopItem, false));
+
         if (memory.isEnablePriceFormat()) {
-            placeholder.add(ItemMetaType.LORE, "%price%", StringUtils.formatToReadable(new Double(shop.getPrice()).longValue(), memory.getPriceFormat()));
+            placeholder.add(ItemMetaType.DISPLAY_AND_LORE, "%price%", StringUtils.formatToReadable(new Double(shop.getPrice()).longValue(), memory.getPriceFormat()));
         } else {
-            placeholder.add(ItemMetaType.LORE, "%price%", Double.toString(shop.getPrice()));
+            placeholder.add(ItemMetaType.DISPLAY_AND_LORE, "%price%", Double.toString(shop.getPrice()));
         }
 
+        setTitle(placeholder.format(memory.getIConfirmTitle()));
         final ItemStack fillItem = fromSection(memory.getIConfirmFillItem(), null);
         final ItemStack acceptButton = fromSection(memory.getIConfirmAcceptButton(), placeholder);
         final ItemStack declineButton = fromSection(memory.getIConfirmDeclineButton(), placeholder);
@@ -56,15 +60,7 @@ public class ConfirmationInventory extends CustomInventory {
         if (memory.isIConfirmFillEmpty()) addBorder(fillItem, false, 0, 1, 2);
 
         if (memory.isIConfirmEnablePreview()) {
-            final TextPlaceholder previewPlaceholder = new TextPlaceholder(ItemMetaType.DISPLAY_NAME, "%item_name%", ItemUtils.getName(shopItem, false));
-            if (shopItem.hasItemMeta()) {
-                previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getLore(shopItem, false));
-                previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", ItemUtils.getName(shopItem, true));
-            } else {
-                previewPlaceholder.add(ItemMetaType.LORE, "%item_lore%", "");
-            }
-            previewPlaceholder.addAll(placeholder);
-            ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), previewPlaceholder);
+            ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), placeholder);
             previewButton.setType(shopItem.getType()); // Because the default is AIR
             previewButton.setAmount(shop.getAmount());
             addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);

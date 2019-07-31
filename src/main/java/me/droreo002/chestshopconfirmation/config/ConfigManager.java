@@ -2,8 +2,10 @@ package me.droreo002.chestshopconfirmation.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.oreocore.configuration.ConfigMemory;
+import me.droreo002.oreocore.configuration.ConfigUpdater;
 import me.droreo002.oreocore.configuration.CustomConfig;
 import me.droreo002.oreocore.configuration.annotations.ConfigVariable;
 import me.droreo002.oreocore.enums.Currency;
@@ -12,6 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +22,17 @@ import java.util.Map;
 
 public class ConfigManager extends CustomConfig {
 
+    public static final String NEWEST_VERSION = "1.0";
+
     @Getter
     private final Memory memory;
+    @Getter
+    private final String currentVersion;
 
-    public ConfigManager(JavaPlugin plugin) {
+    public ConfigManager(ChestShopConfirmation plugin) {
         super(plugin, new File(plugin.getDataFolder(), "config.yml"));
         this.memory = new Memory(this);
+        this.currentVersion = getConfig().getString("ConfigVersion", "0.0");
         registerMemory(memory);
         setupMemory();
     }
