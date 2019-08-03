@@ -10,15 +10,12 @@ import me.droreo002.chestshopconfirmation.debug.Debug;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.chestshopconfirmation.listener.CoreListener;
 import me.droreo002.oreocore.OreoCore;
-import me.droreo002.oreocore.configuration.ConfigUpdater;
-import me.droreo002.oreocore.debugging.Debugger;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.strings.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -54,8 +51,10 @@ public class ChestShopConfirmation extends JavaPlugin {
             throw new NullPointerException("Plugin need ChestShop to run! (Install guide https://github.com/DrOreo002/ChestShopConfirmation/wiki/Installing)");
         }
         instance = this;
-        configManager = new ConfigManager(this);
         debug = new Debug(this);
+        configManager = new ConfigManager(this);
+        debug.setupLogFile();
+
         metrics = new Metrics(this);
         shopOnUse = new HashSet<>();
         playerDatabase = new PlayerDatabase(this);
@@ -67,23 +66,11 @@ public class ChestShopConfirmation extends JavaPlugin {
         debug.log("&7> &fSetting up config.yml....", Level.INFO, false, true);
         debug.log("&7> &fRegistering commands...", Level.INFO, false, true);
         debug.log("&7> &fFinish!", Level.INFO, false, true);
-        if (Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is offline!. Please enable on ChestShop's config.yml to prevent duplication issue!, built-in anti duplication has been &aenabled!", Level.INFO, false, true);
+        if (!Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is offline!. Please enable on ChestShop's config.yml to prevent duplication issue!, built-in anti duplication has been &aenabled!", Level.INFO, false, true);
         out.println(" ");
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
         new CShopConfirmationCommand(this);
         ServerUtils.registerListener(this, new CoreListener(this));
-
-        String currentVersion = configManager.getCurrentVersion();
-        if (currentVersion == null || !currentVersion.equals(ConfigManager.NEWEST_VERSION)) {
-            try {
-                ConfigUpdater.update(configManager.getYamlFile(), this, "config.yml");
-                configManager.getConfig().set("ConfigVersion", ConfigManager.NEWEST_VERSION);
-                configManager.saveConfig(false);
-                getDebug().log("&fUpdating &aconfig.yml &fthis will take a while...", Level.INFO, true, true);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         OreoCore.getInstance().dependPlugin(this, false);
     }

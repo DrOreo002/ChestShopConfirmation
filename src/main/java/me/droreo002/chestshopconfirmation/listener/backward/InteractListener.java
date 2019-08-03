@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-public class InteractListener implements OnInteractHandler{
+public class InteractListener implements OnInteractHandler {
 
     @Override
     public void onInteract(PlayerInteractEvent event) {

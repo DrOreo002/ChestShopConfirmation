@@ -1,10 +1,12 @@
 package me.droreo002.chestshopconfirmation.inventory;
 
+import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.ConfigManager;
 import me.droreo002.chestshopconfirmation.object.Shop;
+import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.inventory.OreoInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
@@ -71,9 +73,8 @@ public class ConfirmationInventory extends OreoInventory {
             TransactionEvent toCall = new TransactionEvent(event, shop.getSign());
             ServerUtils.callEvent(toCall);
 
-            // Remove chest on use
-            Sign sign = (Sign) event.getSign().getData();
-            Block attached = event.getSign().getBlock().getRelative(sign.getAttachedFace());
+            Block attached = getAttached();
+            if (attached == null) return;
 
             // Remove sign and block
             plugin.getShopOnUse().remove(attached.getLocation());
@@ -84,9 +85,9 @@ public class ConfirmationInventory extends OreoInventory {
 
     @Override
     public void onClose(InventoryCloseEvent inventoryCloseEvent) {
-        // Remove chest on use
-        Sign sign = (Sign) preTransactionEvent.getSign().getData();
-        Block attached = preTransactionEvent.getSign().getBlock().getRelative(sign.getAttachedFace());
+        // Add to chest on use
+        Block attached = getAttached();
+        if (attached == null) return;
 
         // Remove sign and block
         plugin.getShopOnUse().remove(attached.getLocation());
@@ -96,13 +97,30 @@ public class ConfirmationInventory extends OreoInventory {
     @Override
     public void onOpen(InventoryOpenEvent inventoryOpenEvent) {
         // Add to chest on use
-        Sign sign = (Sign) preTransactionEvent.getSign().getData();
-        Block attached = preTransactionEvent.getSign().getBlock().getRelative(sign.getAttachedFace());
+        Block attached = getAttached();
+        if (attached == null) return; // FIXME: 03/08/2019 This might create duplication glitch
         if (plugin.getShopOnUse().contains(attached.getLocation())) return;
         if (plugin.getShopOnUse().contains(preTransactionEvent.getSign().getLocation())) return;
 
         // Add sign, and block
         plugin.getShopOnUse().add(attached.getLocation());
         plugin.getShopOnUse().add(preTransactionEvent.getSign().getLocation());
+    }
+
+    /**
+     * Get attached block on sign (PreTransactionEvent)
+     *
+     * @return The attached block
+     */
+    private Block getAttached() {
+        // Add to chest on use
+        Block attached;
+        if (ServerUtils.getServerVersion() == MinecraftVersion.V1_14_R1) {
+            attached = BlockUtil.getAttachedBlock(preTransactionEvent.getSign());
+        } else {
+            Sign s = (Sign) preTransactionEvent.getSign().getData();
+            attached = preTransactionEvent.getSign().getBlock().getRelative(s.getAttachedFace());
+        }
+        return attached;
     }
 }

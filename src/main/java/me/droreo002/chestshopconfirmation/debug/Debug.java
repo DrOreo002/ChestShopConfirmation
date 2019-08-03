@@ -13,10 +13,16 @@ public class Debug extends Debugger {
 
     @Getter
     private final ChestShopConfirmation plugin;
-    private final LogFile logFile;
+    private LogFile logFile;
 
     public Debug(ChestShopConfirmation plugin) {
         this.plugin = plugin;
+    }
+
+    /**
+     * Setup the log file for this debugger
+     */
+    public void setupLogFile() {
         if (plugin.getConfigManager().getMemory().isEnableLogFile()) {
             this.logFile = new DebugFile(plugin);
         } else {
