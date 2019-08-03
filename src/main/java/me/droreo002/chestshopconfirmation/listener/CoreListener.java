@@ -88,7 +88,10 @@ public class CoreListener implements Listener {
         if (transactionType == null) throw new NullPointerException("Failed  to get Transaction type!. Please report this to devs!");
         if (transactionType == OpenRule.TransactionType.SELL && item.getAmount() == item.getMaxStackSize()) transactionType = OpenRule.TransactionType.SELL_STACK;
         if (transactionType == OpenRule.TransactionType.BUY && item.getAmount() == item.getMaxStackSize()) transactionType = OpenRule.TransactionType.BUY_STACK;
-        final int amount = item.getAmount();
+        int amount = 0;
+        for (ItemStack i : event.getStock()) {
+            amount += i.getAmount();
+        }
         final List<OpenRule> openRules = memory.getOpenRule();
 
         boolean cancel = false;
