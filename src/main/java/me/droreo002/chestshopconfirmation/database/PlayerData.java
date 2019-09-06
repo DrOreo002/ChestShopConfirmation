@@ -15,13 +15,13 @@ public class PlayerData {
     @Getter
     private final UUID playerUuid;
     @Getter
-    private final DatabaseFlatFile.Data data;
+    private final DatabaseFlatFile.DataCache data;
     @Getter @Setter
     private boolean confirmationDisabled;
     @Getter @Setter
     private List<Location> disabledShops;
 
-    public PlayerData(UUID playerUuid, DatabaseFlatFile.Data data) {
+    public PlayerData(UUID playerUuid, DatabaseFlatFile.DataCache data) {
         this.playerUuid = playerUuid;
         this.data = data;
         this.confirmationDisabled = data.getConfig().getBoolean("Data.confirmationDisabled");

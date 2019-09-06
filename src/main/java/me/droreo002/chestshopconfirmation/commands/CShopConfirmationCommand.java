@@ -4,6 +4,7 @@ import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.commands.arg.DisableShopCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.EnableShopCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.HelpCommand;
+import me.droreo002.chestshopconfirmation.commands.arg.LoadedDataCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ReloadCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleGlobalCommand;
@@ -38,6 +39,7 @@ public class CShopConfirmationCommand extends CustomCommand {
         tabCompletion.add("disable-shop");
         tabCompletion.add("enable-shop");
         tabCompletion.add("help");
+        tabCompletion.add("loaded-data");
 
         addArgument(new ReloadCommand(this, memory, plugin));
         addArgument(new ToggleCommand(this, memory, plugin));
@@ -45,6 +47,7 @@ public class CShopConfirmationCommand extends CustomCommand {
         addArgument(new ToggleGlobalCommand(this, memory));
         addArgument(new DisableShopCommand(this, memory, plugin));
         addArgument(new EnableShopCommand(this, memory, plugin));
+        addArgument(new LoadedDataCommand(this, memory, plugin));
 
         CustomCommandManager.registerCommand(plugin, this);
     }

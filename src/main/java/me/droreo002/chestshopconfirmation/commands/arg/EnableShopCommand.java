@@ -31,7 +31,7 @@ public class EnableShopCommand extends CommandArg {
         plugin.getOnClickRequest().put(player.getUniqueId(), ClickRequestType.ENABLE_SHOP);
 
         int timeOut = memory.getRightClickTimeout();
-        final TextPlaceholder placeholder = new TextPlaceholder("%time", String.valueOf(timeOut));
+        final TextPlaceholder placeholder = new TextPlaceholder("%time%", String.valueOf(timeOut));
         sendMessage(commandSender, placeholder.format(memory.getMsgRClickToDisable()));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {

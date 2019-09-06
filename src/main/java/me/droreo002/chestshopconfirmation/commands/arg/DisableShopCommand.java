@@ -31,7 +31,7 @@ public class DisableShopCommand extends CommandArg {
         plugin.getOnClickRequest().put(player.getUniqueId(), ClickRequestType.DISABLE_SHOP);
 
         int timeOut = memory.getRightClickTimeout();
-        final TextPlaceholder placeholder = new TextPlaceholder("%time", String.valueOf(timeOut));
+        final TextPlaceholder placeholder = new TextPlaceholder("%time%", String.valueOf(timeOut));
         sendMessage(commandSender, placeholder.format(memory.getMsgRClickToDisable()));
         success(commandSender);
 

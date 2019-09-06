@@ -42,7 +42,22 @@ public class PlayerDatabase extends DatabaseFlatFile {
      * @return the PlayerData object if available, null otherwise
      */
     public PlayerData getPlayerData(UUID uuid) {
-        return playerData.stream().filter(data -> data.getPlayerUuid().equals(uuid)).findAny().orElse(null);
+        PlayerData loaded = playerData.stream().filter(data -> data.getPlayerUuid().equals(uuid)).findAny().orElse(null);
+        if (loaded == null) {
+            registerPlayerData(uuid);
+            return getPlayerData(uuid);
+        }
+        return loaded;
+    }
+
+    /**
+     * Check if the player data is loaded or not
+     *
+     * @param uuid The uuid
+     * @return True if loaded, false otherwise
+     */
+    private boolean isPlayerDataLoaded(UUID uuid) {
+        return  playerData.stream().filter(data -> data.getPlayerUuid().equals(uuid)).findAny().orElse(null) != null;
     }
 
     /**
@@ -50,10 +65,9 @@ public class PlayerDatabase extends DatabaseFlatFile {
      *
      * @param uuid Player uuid
      */
-    public void registerPlayerData(UUID uuid) {
-        if (getPlayerData(uuid) != null) return;
+    private void registerPlayerData(UUID uuid) {
         setup(uuid.toString(), true);
-        final Data data = getDataClass(uuid.toString());
+        DataCache data = getDataCache(uuid.toString());
         playerData.add(new PlayerData(uuid, data));
     }
 
@@ -64,9 +78,10 @@ public class PlayerDatabase extends DatabaseFlatFile {
      * @param delete Should we delete the file?
      */
     public void unregisterPlayerData(UUID uuid, boolean delete) {
+        if (!isPlayerDataLoaded(uuid)) return;
         final PlayerData data = getPlayerData(uuid);
         if (data == null) return;
-        if (delete) removeData(data.getData(), true);
+        removeData(data.getData(), delete);
         playerData.removeIf(pData -> pData.getPlayerUuid().equals(uuid));
     }
 }

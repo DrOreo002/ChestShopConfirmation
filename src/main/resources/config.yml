@@ -138,8 +138,8 @@ Inventory:
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
 Messages:
   cant-open-chest: '&fCan''t do that right now..'
-  right-click-to-disable: 'Right click on any shop to disable the confirmation for that shop. Time left &e%time second'
-  right-click-to-enable: 'Right click on any shop to enable the confirmation for that shop. Time left &e%time second'
+  right-click-to-disable: 'Right click on any shop to disable the confirmation for that shop. Time left &e%time% second'
+  right-click-to-enable: 'Right click on any shop to enable the confirmation for that shop. Time left &e%time% second'
   confirmation-disabled: 'Confirmation has been &cdisabled &ffor every shop! (Your account only). Run this command again to &aenable'
   confirmation-enabled: 'Confirmation has been &aenabled &ffor every shop! (Your account only). Run this command again to &cdisable'
   shop-disabled: 'Confirmation for clicked shop has been &cdisabled!'

@@ -158,11 +158,6 @@ public class CoreListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        plugin.getPlayerDatabase().registerPlayerData(e.getPlayer().getUniqueId());
-    }
-
-    @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         plugin.getPlayerDatabase().unregisterPlayerData(e.getPlayer().getUniqueId(), false);
     }
