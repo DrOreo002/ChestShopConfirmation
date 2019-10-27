@@ -9,6 +9,7 @@ import me.droreo002.chestshopconfirmation.database.PlayerDatabase;
 import me.droreo002.chestshopconfirmation.debug.Debug;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.chestshopconfirmation.listener.CoreListener;
+import me.droreo002.oreocore.DependedPluginProperties;
 import me.droreo002.oreocore.OreoCore;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.strings.StringUtils;
@@ -72,7 +73,11 @@ public class ChestShopConfirmation extends JavaPlugin {
         new CShopConfirmationCommand(this);
         ServerUtils.registerListener(this, new CoreListener(this));
 
-        OreoCore.getInstance().dependPlugin(this, false);
+        OreoCore.getInstance().dependPlugin(this, DependedPluginProperties.builder()
+                .enableLogging(false)
+                .premiumPlugin(false)
+                .privatePlugin(false)
+                .build());
     }
 
     @Override

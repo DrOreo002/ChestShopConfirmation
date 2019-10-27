@@ -1,4 +1,4 @@
-ConfigVersion: 1.0 # Do not change!
+ConfigVersion: 1.1 # Do not change!
 Settings:
   CommandSound:
     success:
@@ -71,46 +71,41 @@ Inventory:
       should: true
       # The item. Format is same as above
       item:
-        material: STAINED_GLASS_PANE
-        itemID: 7
+        material: GRAY_STAINED_GLASS_PANE
         name: '.'
     enablePreview: true
     AcceptButton:
       slot: 10
-      material: WOOL
-      itemID: 5
-      name: '&a&lCONFIRM &7(Click&7)'
+      material: PLAYER_HEAD
+      texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTMwZjQ1MzdkMjE0ZDM4NjY2ZTYzMDRlOWM4NTFjZDZmN2U0MWEwZWI3YzI1MDQ5YzlkMjJjOGM1ZjY1NDVkZiJ9fX0='
+      name: '&aConfirm'
       lore:
-        - '&8&m+--------------------+'
-        - '&r'
-        - '&7(&b✿&7) &8» &fClick to &e%transaction_type%'
+        - '&7Click to &a%transaction_type%'
     DeclineButton:
       slot: 16
-      material: WOOL
-      itemID: 14
-      name: '&c&lCANCEL &7(Click&7)'
+      material: PLAYER_HEAD
+      texture: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWE2Nzg3YmEzMjU2NGU3YzJmM2EwY2U2NDQ5OGVjYmIyM2I4OTg0NWU1YTY2YjVjZWM3NzM2ZjcyOWVkMzcifX19'
+      name: '&cCancel'
       lore:
-        - '&8&m+--------------------+'
-        - '&r'
-        - '&7(&b✿&7) &8» &fClick to close'
+        - '&7Click to close the inventory'
     # Available placeholders:
     # %item_lore%, %item_name%, %transaction_type%
     # %currency_symbol%, %item%, %price%
     ItemPreviewButton:
       slot: 13
       material: DIRT # Don't worry, this will change. Depending on what item is inside
-      name: '&7[&e%transaction_type%&7] &8» &f%item_name%'
+      name: '&7[&e%transaction_type%&7]&f %item_name%'
       lore:
-        - '&8&m+--------------------+'
-        - '&r'
-        - ' &b✿ &fOwner &8» &e%shop_owner%'
-        - ' &b✿ &f%transaction_type% Price &8» &e%currency_symbol%%price%'
-        - ' &b✿ &fItem &8» &e%item% &7(x%item_amount%&7)'
-        - '&r'
-        - '&8&m+--------------------+'
-        - '&r'
-        - '&b✿ &fItem Lore &8»'
+        - '&aShop Information:'
+        - ' &7Owner: &e%shop_owner%'
+        - ' &7%transaction_type% Price: &e%currency_symbol%%price%'
+        - ' &7Item type: &e%item% &7(x%item_amount%&7)'
+        - '&aLore:'
         - '%item_lore%' # You can remove this if you want to
+        - '&aEnchant(s):'
+        - '%item_enchants%'
+        - '&aFlag(s):'
+        - '%item_flags%'
   Information:
     title: 'Information'
     # Sound list can be found at https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
@@ -125,16 +120,14 @@ Inventory:
       should: true
       # The item. Format is same as above
       item:
-        material: STAINED_GLASS_PANE
+        material: GRAY_STAINED_GLASS_PANE
         itemID: 7
         name: '.'
     InformationButton:
       material: PAPER
       slot: 13
-      name: '&7[ &bInfo &7]'
+      name: '&aInformation'
       lore:
-        - '&8&m+--------------------+'
-        - '&r'
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
 Messages:
   cant-open-chest: '&fCan''t do that right now..'
@@ -147,6 +140,7 @@ Messages:
   shop-already-disabled: 'Confirmation already disabled for that shop'
   shop-already-enabled: 'Confirmation already enabled for that shop'
   time-out: 'Time out!'
+  empty: '&7(Empty)'
   command:
     no-permission: 'You don''t have the right permission to run this command!'
     invalid-arg: 'Invalid command!'

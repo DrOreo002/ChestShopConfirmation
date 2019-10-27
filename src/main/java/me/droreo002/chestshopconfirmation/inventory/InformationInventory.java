@@ -25,6 +25,6 @@ public class InformationInventory extends CustomInventory {
 
         if (memory.isIInformationFillEmpty()) addBorder(fill, false, 0, 1, 2);
 
-        addButton(new GUIButton(infoSign, memory.getIInformationInfoButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
+        addButton(new GUIButton(infoSign, memory.getIInformationInfoButtonSlot()).addListener(GUIButton.CLOSE_LISTENER), true);
     }
 }

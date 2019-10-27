@@ -20,7 +20,7 @@ import java.util.logging.Level;
 
 public class ConfigManager extends CustomConfig {
 
-    public static final String NEWEST_VERSION = "1.0";
+    public static final String NEWEST_VERSION = "1.1";
 
     @Getter
     private final Memory memory;
@@ -279,6 +279,10 @@ public class ConfigManager extends CustomConfig {
         @ConfigVariable(path = "Messages.time-out")
         @Getter
         private String msgTimeOut;
+
+        @ConfigVariable(path = "Messages.empty")
+        @Getter
+        private String msgEmpty;
 
         Memory(CustomConfig parent) {
             this.parent = parent;

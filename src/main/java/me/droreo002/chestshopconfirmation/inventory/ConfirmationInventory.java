@@ -14,12 +14,15 @@ import me.droreo002.oreocore.utils.item.ItemUtils;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import me.droreo002.oreocore.utils.strings.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Sign;
+
+import java.util.List;
 
 import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
@@ -36,9 +39,26 @@ public class ConfirmationInventory extends OreoInventory {
 
         final ItemStack shopItem = shop.getItem();
 
+        // For some reason, it can be null...
+        if (shopItem == null) {
+            player.sendMessage(ChatColor.RED + "Cannot find the value for shopItem variable!. Please check your log and report to owner!");
+            throw new NullPointerException("Cannot find the value for shopItem variable!. Please check your log and report to owner!");
+        }
+
         setSoundOnClick(memory.getConfirmClickSound());
         setSoundOnOpen(memory.getConfirmOpenSound());
         setSoundOnClose(memory.getConfirmCloseSound());
+
+        String emptyMsg = plugin.getConfigManager().getMemory().getMsgEmpty();
+        List<String> lore = ItemUtils.getLore(shopItem, false);
+        List<String> enchants = ItemUtils.getEnchantAsString(shopItem, true);
+        List<String> flags = ItemUtils.getItemFlagAsString(shopItem);
+
+        enchants.replaceAll(m -> {
+            String[] ecData = m.split("\\|");
+            return "   &7- " + ecData[0] + " &e[" + ecData[1] + "]";
+        });
+        flags.replaceAll(m -> "   &7- " + m);
 
         final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.DISPLAY_AND_LORE, "%shop_owner%", shop.getOwner())
                 .add(ItemMetaType.DISPLAY_AND_LORE,"%item_amount%", String.valueOf(shop.getAmount()))
@@ -46,7 +66,9 @@ public class ConfirmationInventory extends OreoInventory {
                 .add(ItemMetaType.DISPLAY_AND_LORE, "%item%", shop.getItem().getType().toString())
                 .add(ItemMetaType.DISPLAY_AND_LORE, "%transaction_type%", color(shop.getShopType().asTranslatedString()))
                 .add(ItemMetaType.DISPLAY_AND_LORE, "%item_name%", color(ItemUtils.getName(shopItem, true)))
-                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_lore%", ItemUtils.getLore(shopItem, false));
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_lore%", (lore.isEmpty()) ? emptyMsg : lore)
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_enchants%", (enchants.isEmpty()) ? emptyMsg : enchants)
+                .add(ItemMetaType.DISPLAY_AND_LORE, "%item_flags%", (flags.isEmpty()) ? emptyMsg : flags);
 
         if (memory.isEnablePriceFormat()) {
             placeholder.add(ItemMetaType.DISPLAY_AND_LORE, "%price%", StringUtils.formatToReadable(new Double(shop.getPrice()).longValue(), memory.getPriceFormat()));
@@ -65,10 +87,10 @@ public class ConfirmationInventory extends OreoInventory {
             ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), placeholder);
             previewButton.setType(shopItem.getType()); // Because the default is AIR
             previewButton.setAmount(shop.getAmount());
-            addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
+            addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).addListener(GUIButton.CLOSE_LISTENER), true);
         }
 
-        addButton(new GUIButton(acceptButton, memory.getIConfirmAcceptButtonSlot()).setListener(inventoryClickEvent -> {
+        addButton(new GUIButton(acceptButton, memory.getIConfirmAcceptButtonSlot()).addListener(inventoryClickEvent -> {
             closeInventory(player);
             TransactionEvent toCall = new TransactionEvent(event, shop.getSign());
             ServerUtils.callEvent(toCall);
@@ -80,7 +102,7 @@ public class ConfirmationInventory extends OreoInventory {
             plugin.getShopOnUse().remove(attached.getLocation());
             plugin.getShopOnUse().remove(preTransactionEvent.getSign().getLocation());
         }), true);
-        addButton(new GUIButton(declineButton, memory.getIConfirmDeclineButtonSlot()).setListener(GUIButton.CLOSE_LISTENER), true);
+        addButton(new GUIButton(declineButton, memory.getIConfirmDeclineButtonSlot()).addListener(GUIButton.CLOSE_LISTENER), true);
     }
 
     @Override
