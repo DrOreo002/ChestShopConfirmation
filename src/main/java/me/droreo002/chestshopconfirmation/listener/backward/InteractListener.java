@@ -1,7 +1,7 @@
 package me.droreo002.chestshopconfirmation.listener.backward;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.oreocore.utils.item.complex.UMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -14,7 +14,7 @@ public class InteractListener implements OnInteractHandler {
     @Override
     public void onInteract(PlayerInteractEvent event) {
         final ChestShopConfirmation plugin = ChestShopConfirmation.getInstance();
-        final ConfigManager.Memory memory = plugin.getConfigManager().getMemory();
+        final PluginConfig memory = plugin.getPluginConfig();
         if (!memory.isEnableConfirmation()) return;
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.getClickedBlock() == null) return;

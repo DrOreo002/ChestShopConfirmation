@@ -1,7 +1,7 @@
 package me.droreo002.chestshopconfirmation.commands.arg;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.oreocore.commands.CommandArg;
 import me.droreo002.oreocore.commands.CustomCommand;
@@ -13,9 +13,9 @@ import org.bukkit.entity.Player;
 public class DisableShopCommand extends CommandArg {
 
     private final ChestShopConfirmation plugin;
-    private final ConfigManager.Memory memory;
+    private final PluginConfig memory;
 
-    public DisableShopCommand(CustomCommand parent, ConfigManager.Memory memory, ChestShopConfirmation plugin) {
+    public DisableShopCommand(CustomCommand parent, PluginConfig memory, ChestShopConfirmation plugin) {
         super("disable-shop", parent);
         this.plugin = plugin;
         this.memory = memory;

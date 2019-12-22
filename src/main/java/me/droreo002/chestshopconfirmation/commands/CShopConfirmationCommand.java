@@ -8,7 +8,7 @@ import me.droreo002.chestshopconfirmation.commands.arg.LoadedDataCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ReloadCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleCommand;
 import me.droreo002.chestshopconfirmation.commands.arg.ToggleGlobalCommand;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.oreocore.commands.CustomCommand;
 import me.droreo002.oreocore.commands.CustomCommandManager;
 import org.bukkit.command.Command;
@@ -19,19 +19,13 @@ import java.util.List;
 
 public class CShopConfirmationCommand extends CustomCommand {
 
-    private final ChestShopConfirmation plugin;
-    private final ConfigManager.Memory memory;
+    private final PluginConfig memory;
     private final List<String> tabCompletion;
 
     public CShopConfirmationCommand(ChestShopConfirmation plugin) {
         super(plugin, "chestshopconfirmation", "csc");
-        this.plugin = plugin;
-        this.memory = plugin.getConfigManager().getMemory();
+        this.memory = plugin.getPluginConfig();
         this.tabCompletion = new ArrayList<>();
-
-        setErrorSound(memory.getCmdErrorSound());
-        setSuccessSound(memory.getCmdSuccessSound());
-        setArgumentNotFoundMessage(memory.getMsgInvalidArg());
 
         tabCompletion.add("reload");
         tabCompletion.add("toggle");
@@ -50,6 +44,7 @@ public class CShopConfirmationCommand extends CustomCommand {
         addArgument(new LoadedDataCommand(this, memory, plugin));
 
         CustomCommandManager.registerCommand(plugin, this);
+        reload();
     }
 
     @Override
@@ -69,5 +64,11 @@ public class CShopConfirmationCommand extends CustomCommand {
             return createReturnList(tabCompletion, args[0]);
         }
         return null;
+    }
+
+    public void reload() {
+        setErrorSound(memory.getCmdErrorSound());
+        setSuccessSound(memory.getCmdSuccessSound());
+        setArgumentNotFoundMessage(memory.getMsgInvalidArg());
     }
 }

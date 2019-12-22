@@ -2,6 +2,7 @@ name: ChestShopConfirmation
 version: @version@
 main: me.droreo002.chestshopconfirmation.ChestShopConfirmation
 depend: [ChestShop, OreoCore]
+api-version: 1.13
 
 commands:
   chestshopconfirmation:

@@ -1,4 +1,5 @@
-ConfigVersion: 1.1 # Do not change!
+# Do not change!
+ConfigVersion: 1.1
 Settings:
   CommandSound:
     success:
@@ -13,8 +14,8 @@ Settings:
   prefix: '&7[ &bConfirmation &7]&f '
   # Should we enable the log file?
   enableLogFile: true
-  # Timeout for right click request
-  rightClickTimeout: 5 # In second
+  # Timeout for right click request in second
+  rightClickTimeout: 5
   # Transaction type translation, also support for special character and color
   transactionType:
     BUY: 'Buy'
@@ -23,7 +24,7 @@ Settings:
     BUY_STACK: 'Buy Stack'
   # The price format. This will format the price from 1000 to 1k!
   PriceFormat:
-    enable: true # Please be aware that the number will not be 100% precise!. For example 125.6 will not always be 125.6. It could change to 125!
+    enable: true
     THOUSANDS: 'k'
     MILLIONS: 'M'
     BILLIONS: 'B'
@@ -48,7 +49,8 @@ Settings:
   # The confirmation rule. The confirmation will only open if the requirement are set
   # Syntax : <world, all>:<BUY, SELL, SELL_STACK, BUY_STACK, ALL>
   ConfirmationOpenRule:
-    - 'all:ALL' # Will open on every world for both transaction type, its recommended to keep this one here
+    - 'all:ALL'
+    # ^ Will open on every world for both transaction type, its recommended to keep this one here
     #- 'world:BUY' # Will only open in world = world and when the transaction type is BUY. This will override the 'all'
     #- 'survival:BUY_STACK' # Will only open in world = survival and when the transaction type is BUY_STACK. This will override the 'all'
   # If this set to true then player who have 'csc.bypass' permission will be able to bypass the confirmation gui!
@@ -129,6 +131,7 @@ Inventory:
       name: '&aInformation'
       lore:
         - '&7(&e%transaction_type%-ing &7item is disabled on this shop&7)'
+# All plugin messages goes here
 Messages:
   cant-open-chest: '&fCan''t do that right now..'
   right-click-to-disable: 'Right click on any shop to disable the confirmation for that shop. Time left &e%time% second'

@@ -4,7 +4,7 @@ import com.Acrobot.ChestShop.Configuration.Properties;
 import lombok.Getter;
 import me.droreo002.chestshopconfirmation.bstats.Metrics;
 import me.droreo002.chestshopconfirmation.commands.CShopConfirmationCommand;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.database.PlayerDatabase;
 import me.droreo002.chestshopconfirmation.debug.Debug;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
@@ -30,7 +30,7 @@ public class ChestShopConfirmation extends JavaPlugin {
     @Getter
     private static ChestShopConfirmation instance;
     @Getter
-    private ConfigManager configManager;
+    private PluginConfig pluginConfig;
     @Getter
     private Debug debug;
     @Getter
@@ -39,6 +39,8 @@ public class ChestShopConfirmation extends JavaPlugin {
     private Set<Location> shopOnUse;
     @Getter
     private PlayerDatabase playerDatabase;
+    @Getter
+    private CShopConfirmationCommand mainCommand;
     @Getter
     private final Map<UUID, ClickRequestType> onClickRequest = new HashMap<>();
 
@@ -53,7 +55,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         }
         instance = this;
         debug = new Debug(this);
-        configManager = new ConfigManager(this);
+        pluginConfig = new PluginConfig(this);
         debug.setupLogFile();
 
         metrics = new Metrics(this);
@@ -70,7 +72,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         if (!Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is offline!. Please enable on ChestShop's config.yml to prevent duplication issue!, built-in anti duplication has been &aenabled!", Level.INFO, false, true);
         out.println(" ");
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
-        new CShopConfirmationCommand(this);
+        mainCommand = new CShopConfirmationCommand(this);
         ServerUtils.registerListener(this, new CoreListener(this));
 
         OreoCore.getInstance().dependPlugin(this, DependedPluginProperties.builder()
@@ -93,6 +95,6 @@ public class ChestShopConfirmation extends JavaPlugin {
      * @param msg : The message to send
      */
     public void sendMessage(Player player, String msg) {
-        player.sendMessage(StringUtils.color(getConfigManager().getMemory().getPrefix() + msg));
+        player.sendMessage(StringUtils.color(getPluginConfig().getPrefix() + msg));
     }
 }

@@ -4,7 +4,7 @@ import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.object.Shop;
 import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.inventory.OreoInventory;
@@ -32,7 +32,7 @@ public class ConfirmationInventory extends OreoInventory {
     private final PreTransactionEvent preTransactionEvent;
     private final ChestShopConfirmation plugin;
 
-    public ConfirmationInventory(final Player player, final ConfigManager.Memory memory, final Shop shop, final PreTransactionEvent event) {
+    public ConfirmationInventory(final Player player, final PluginConfig memory, final Shop shop, final PreTransactionEvent event) {
         super(27);
         this.plugin = ChestShopConfirmation.getInstance();
         this.preTransactionEvent = event;
@@ -49,7 +49,7 @@ public class ConfirmationInventory extends OreoInventory {
         setSoundOnOpen(memory.getConfirmOpenSound());
         setSoundOnClose(memory.getConfirmCloseSound());
 
-        String emptyMsg = plugin.getConfigManager().getMemory().getMsgEmpty();
+        String emptyMsg = plugin.getPluginConfig().getMsgEmpty();
         List<String> lore = ItemUtils.getLore(shopItem, false);
         List<String> enchants = ItemUtils.getEnchantAsString(shopItem, true);
         List<String> flags = ItemUtils.getItemFlagAsString(shopItem);

@@ -1,15 +1,15 @@
 package me.droreo002.chestshopconfirmation.commands.arg;
 
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.oreocore.commands.CommandArg;
 import me.droreo002.oreocore.commands.CustomCommand;
 import org.bukkit.command.CommandSender;
 
 public class ToggleGlobalCommand extends CommandArg {
 
-    private final ConfigManager.Memory memory;
+    private final PluginConfig memory;
 
-    public ToggleGlobalCommand(CustomCommand parent, ConfigManager.Memory memory) {
+    public ToggleGlobalCommand(CustomCommand parent, PluginConfig memory) {
         super("toggle-global", parent);
         this.memory = memory;
 

@@ -1,7 +1,7 @@
 package me.droreo002.chestshopconfirmation.commands.arg;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.database.PlayerData;
 import me.droreo002.oreocore.commands.CommandArg;
 import me.droreo002.oreocore.commands.CustomCommand;
@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 
 public class ToggleCommand extends CommandArg {
 
-    private final ConfigManager.Memory memory;
+    private final PluginConfig memory;
     private final ChestShopConfirmation plugin;
 
-    public ToggleCommand(CustomCommand parent, ConfigManager.Memory memory, ChestShopConfirmation plugin) {
+    public ToggleCommand(CustomCommand parent, PluginConfig memory, ChestShopConfirmation plugin) {
         super("toggle", parent);
         this.memory = memory;
         this.plugin = plugin;

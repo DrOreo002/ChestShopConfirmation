@@ -1,14 +1,12 @@
 package me.droreo002.chestshopconfirmation.commands.arg;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.oreocore.commands.CommandArg;
 import me.droreo002.oreocore.commands.CustomCommand;
 import me.droreo002.oreocore.database.object.DatabaseFlatFile;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
@@ -17,7 +15,7 @@ public class LoadedDataCommand extends CommandArg {
 
     private final ChestShopConfirmation plugin;
 
-    public LoadedDataCommand(CustomCommand parent, ConfigManager.Memory memory, ChestShopConfirmation plugin) {
+    public LoadedDataCommand(CustomCommand parent, PluginConfig memory, ChestShopConfirmation plugin) {
         super("loaded-data", parent);
         this.plugin = plugin;
 

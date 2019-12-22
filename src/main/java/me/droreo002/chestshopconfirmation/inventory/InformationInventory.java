@@ -1,6 +1,6 @@
 package me.droreo002.chestshopconfirmation.inventory;
 
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.oreocore.inventory.CustomInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InformationInventory extends CustomInventory {
 
-    public InformationInventory(final ConfigManager.Memory memory, final OpenRule.TransactionType type) {
+    public InformationInventory(final PluginConfig memory, final OpenRule.TransactionType type) {
         super(27, memory.getIInformationTitle());
 
         setSoundOnClick(memory.getInfoClickSound());

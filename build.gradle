@@ -34,10 +34,10 @@ dependencies {
 }
 
 def pluginName = rootProject.name
-def spigotDirectory = "Spigot 1.15"
+def spigotDirectory = "Spigot 1.13"
 
 group = 'me.droreo002'
-version = '3.6'
+version = '3.7'
 targetCompatibility = '1.8'
 
 shadowJar {

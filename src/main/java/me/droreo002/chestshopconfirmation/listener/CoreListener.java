@@ -1,10 +1,8 @@
 package me.droreo002.chestshopconfirmation.listener;
 
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
-import com.Acrobot.ChestShop.Events.TransactionEvent;
-import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.config.ConfigManager;
+import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.database.PlayerData;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.chestshopconfirmation.inventory.ConfirmationInventory;
@@ -15,22 +13,16 @@ import me.droreo002.chestshopconfirmation.listener.backward.OnInteractHandler;
 import me.droreo002.chestshopconfirmation.object.OpenRule;
 import me.droreo002.chestshopconfirmation.object.Shop;
 import me.droreo002.oreocore.enums.MinecraftVersion;
-import me.droreo002.oreocore.enums.XMaterial;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
-import me.droreo002.oreocore.utils.item.complex.UMaterial;
 import me.droreo002.oreocore.utils.misc.ThreadingUtils;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -47,7 +39,7 @@ public class CoreListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPre(PreTransactionEvent event) {
-        final ConfigManager.Memory memory = plugin.getConfigManager().getMemory();
+        final PluginConfig memory = plugin.getPluginConfig();
         if (!memory.isEnableConfirmation()) return;
 
         final Player client = event.getClient();

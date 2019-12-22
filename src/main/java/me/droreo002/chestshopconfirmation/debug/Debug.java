@@ -23,7 +23,7 @@ public class Debug extends Debugger {
      * Setup the log file for this debugger
      */
     public void setupLogFile() {
-        if (plugin.getConfigManager().getMemory().isEnableLogFile()) {
+        if (plugin.getPluginConfig().isEnableLogFile()) {
             this.logFile = new DebugFile(plugin);
         } else {
             this.logFile = null;
