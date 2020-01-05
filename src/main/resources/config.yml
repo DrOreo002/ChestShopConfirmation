@@ -1,5 +1,5 @@
 # Do not change!
-ConfigVersion: 1.1
+ConfigVersion: 1.2
 Settings:
   CommandSound:
     success:
@@ -8,6 +8,9 @@ Settings:
       sound: ORB_PICKUP
   # Enable plugin's functionality?
   enableConfirmation: true
+  # Confirmation delay in second. So after 10 second player will get prompted by the confirmation dialog
+  # when they trying to purchase from a shop. Set this to 0 to disable
+  confirmationDelay: 10
   # The currency symbol
   currencySymbol: '$'
   # The plugin prefix

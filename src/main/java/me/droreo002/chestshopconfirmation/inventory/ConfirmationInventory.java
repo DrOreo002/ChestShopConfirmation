@@ -5,7 +5,7 @@ import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import com.Acrobot.ChestShop.Events.TransactionEvent;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.PluginConfig;
-import me.droreo002.chestshopconfirmation.object.Shop;
+import me.droreo002.chestshopconfirmation.model.Shop;
 import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.inventory.OreoInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
@@ -13,6 +13,7 @@ import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.item.ItemUtils;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
+import me.droreo002.oreocore.utils.multisupport.MinecraftFeature;
 import me.droreo002.oreocore.utils.strings.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -20,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Sign;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class ConfirmationInventory extends OreoInventory {
     private final PreTransactionEvent preTransactionEvent;
     private final ChestShopConfirmation plugin;
 
+    @SuppressWarnings("deprecation")
     public ConfirmationInventory(final Player player, final PluginConfig memory, final Shop shop, final PreTransactionEvent event) {
         super(27);
         this.plugin = ChestShopConfirmation.getInstance();
@@ -87,6 +90,20 @@ public class ConfirmationInventory extends OreoInventory {
             ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), placeholder);
             previewButton.setType(shopItem.getType()); // Because the default is AIR
             previewButton.setAmount(shop.getAmount());
+
+            /*
+            Set custom model data
+             */
+            ItemMeta shopItemMeta = shopItem.getItemMeta();
+            if (!ServerUtils.isVersionHas(MinecraftFeature.CUSTOM_MODEL_DATA)) {
+                previewButton.setDurability(shopItem.getDurability());
+            } else {
+                ItemMeta previewButtonMeta = previewButton.getItemMeta();
+                if (shopItemMeta.hasCustomModelData()) {
+                    previewButtonMeta.setCustomModelData(shopItemMeta.getCustomModelData());
+                }
+                previewButton.setItemMeta(previewButtonMeta);
+            }
             addButton(new GUIButton(previewButton, memory.getIConfirmPreviewButtonSlot()).addListener(GUIButton.CLOSE_LISTENER), true);
         }
 

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.chestshopconfirmation.object.OpenRule;
+import me.droreo002.chestshopconfirmation.model.OpenRule;
 import me.droreo002.oreocore.configuration.ConfigMemory;
 import me.droreo002.oreocore.configuration.CustomConfig;
 import me.droreo002.oreocore.configuration.annotations.ConfigVariable;
@@ -21,11 +21,11 @@ import java.util.logging.Level;
 
 public class PluginConfig extends CustomConfig implements ConfigMemory {
 
-    public static final String NEWEST_VERSION = "1.1";
+    public static final String NEWEST_VERSION = "1.2";
 
     /*
-        Other value
-         */
+    Other value
+     */
     @Getter
     private final Map<Currency, String> priceFormat;
 
@@ -38,6 +38,10 @@ public class PluginConfig extends CustomConfig implements ConfigMemory {
     @ConfigVariable(path = "Settings.enableConfirmation", isUpdateAbleObject = true)
     @Getter @Setter
     private boolean enableConfirmation;
+
+    @ConfigVariable(path = "Settings.confirmationDelay")
+    @Getter
+    private int confirmationDelay;
 
     @ConfigVariable(path = "Settings.currencySymbol")
     @Getter

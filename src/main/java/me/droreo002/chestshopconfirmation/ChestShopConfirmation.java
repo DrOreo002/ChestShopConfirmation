@@ -9,6 +9,7 @@ import me.droreo002.chestshopconfirmation.database.PlayerDatabase;
 import me.droreo002.chestshopconfirmation.debug.Debug;
 import me.droreo002.chestshopconfirmation.enums.ClickRequestType;
 import me.droreo002.chestshopconfirmation.listener.CoreListener;
+import me.droreo002.chestshopconfirmation.model.ShopDelayer;
 import me.droreo002.oreocore.DependedPluginProperties;
 import me.droreo002.oreocore.OreoCore;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
@@ -42,6 +43,8 @@ public class ChestShopConfirmation extends JavaPlugin {
     @Getter
     private CShopConfirmationCommand mainCommand;
     @Getter
+    private ShopDelayer shopDelayer;
+    @Getter
     private final Map<UUID, ClickRequestType> onClickRequest = new HashMap<>();
 
     @Override
@@ -57,6 +60,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         debug = new Debug(this);
         pluginConfig = new PluginConfig(this);
         debug.setupLogFile();
+        shopDelayer = new ShopDelayer(this);
 
         metrics = new Metrics(this);
         shopOnUse = new HashSet<>();
@@ -80,12 +84,6 @@ public class ChestShopConfirmation extends JavaPlugin {
                 .premiumPlugin(false)
                 .privatePlugin(false)
                 .build());
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-        debug.log("Plugin has been disabled!", Level.INFO, true, true);
     }
 
     /**

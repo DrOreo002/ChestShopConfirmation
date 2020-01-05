@@ -10,8 +10,8 @@ import me.droreo002.chestshopconfirmation.inventory.InformationInventory;
 import me.droreo002.chestshopconfirmation.listener.backward.InteractListener;
 import me.droreo002.chestshopconfirmation.listener.backward.InteractListener_1_8_R;
 import me.droreo002.chestshopconfirmation.listener.backward.OnInteractHandler;
-import me.droreo002.chestshopconfirmation.object.OpenRule;
-import me.droreo002.chestshopconfirmation.object.Shop;
+import me.droreo002.chestshopconfirmation.model.OpenRule;
+import me.droreo002.chestshopconfirmation.model.Shop;
 import me.droreo002.oreocore.enums.MinecraftVersion;
 import me.droreo002.oreocore.utils.bridge.ServerUtils;
 import me.droreo002.oreocore.utils.misc.ThreadingUtils;
@@ -46,6 +46,7 @@ public class CoreListener implements Listener {
         final Sign sign = event.getSign();
         final PlayerData playerData = plugin.getPlayerDatabase().getPlayerData(client.getUniqueId());
         if (playerData == null) return;
+        if (plugin.getShopDelayer().isAdded(client)) return;
 
         // Cant put this on Interact listener, since ChestShop need to process the interact listener first.
         if (plugin.getOnClickRequest().containsKey(client.getUniqueId())) {
@@ -134,7 +135,10 @@ public class CoreListener implements Listener {
         }
 
         final Shop shop = new Shop(sign, owner, amount, item, price, transactionType);
-        ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> input.open(client)).execute();
+        ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> {
+            input.open(client);
+            plugin.getShopDelayer().add(client);
+        }).execute();
     }
 
     @EventHandler(priority = EventPriority.LOW)

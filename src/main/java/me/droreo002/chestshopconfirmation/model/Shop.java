@@ -1,4 +1,4 @@
-package me.droreo002.chestshopconfirmation.object;
+package me.droreo002.chestshopconfirmation.model;
 
 import lombok.Getter;
 import org.bukkit.block.Sign;

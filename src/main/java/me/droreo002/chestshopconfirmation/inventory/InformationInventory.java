@@ -1,7 +1,7 @@
 package me.droreo002.chestshopconfirmation.inventory;
 
 import me.droreo002.chestshopconfirmation.config.PluginConfig;
-import me.droreo002.chestshopconfirmation.object.OpenRule;
+import me.droreo002.chestshopconfirmation.model.OpenRule;
 import me.droreo002.oreocore.inventory.CustomInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
 import me.droreo002.oreocore.utils.item.CustomItem;
