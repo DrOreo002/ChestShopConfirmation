@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT'
-    compileOnly 'me.droreo002:OreoCore:12.0'
+    compileOnly 'me.droreo002:OreoCore:13.0'
     compileOnly 'com.Acrobot:ChestShop:1.0' // This is manually installed dependency
     compileOnly 'org.projectlombok:lombok:1.18.4'
 
@@ -37,7 +37,7 @@ def pluginName = rootProject.name
 def spigotDirectory = "Spigot 1.13"
 
 group = 'me.droreo002'
-version = '3.9'
+version = '4.0'
 targetCompatibility = '1.8'
 
 shadowJar {

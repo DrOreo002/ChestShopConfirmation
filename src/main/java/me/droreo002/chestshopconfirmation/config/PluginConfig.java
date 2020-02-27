@@ -5,8 +5,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.model.OpenRule;
-import me.droreo002.oreocore.configuration.ConfigMemory;
-import me.droreo002.oreocore.configuration.CustomConfig;
+import me.droreo002.oreocore.configuration.ConfigurationMemory;
+import me.droreo002.oreocore.configuration.CustomConfiguration;
 import me.droreo002.oreocore.configuration.annotations.ConfigVariable;
 import me.droreo002.oreocore.enums.Currency;
 import me.droreo002.oreocore.utils.misc.SoundObject;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class PluginConfig extends CustomConfig implements ConfigMemory {
+public class PluginConfig extends CustomConfiguration implements ConfigurationMemory {
 
     public static final String NEWEST_VERSION = "1.2";
 
@@ -285,7 +285,7 @@ public class PluginConfig extends CustomConfig implements ConfigMemory {
     }
 
     @Override
-    public @NonNull CustomConfig getParent() {
+    public @NonNull CustomConfiguration getParent() {
         return this;
     }
 }

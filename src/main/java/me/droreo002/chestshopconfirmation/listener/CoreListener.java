@@ -91,8 +91,8 @@ public class CoreListener implements Listener {
         // Check for 'all' first
         for (OpenRule rule : openRules) {
             if (rule.getWorld().equals("all")) {
-                if (rule.getTransactionType() == OpenRule.TransactionType.ALL) break;
-                if (!rule.getTransactionType().equals(transactionType)) {
+                if (rule.isUniversal()) break;
+                if (!rule.getTransactionTypes().contains(transactionType)) {
                     cancel = true;
                     break;
                 }
@@ -103,8 +103,11 @@ public class CoreListener implements Listener {
         // Try to check on other
         for (OpenRule rule : openRules) {
             if (rule.getWorld().equals(client.getWorld().getName())) {
-                if (rule.getTransactionType() == OpenRule.TransactionType.ALL) continue;
-                if (!rule.getTransactionType().equals(transactionType)) cancel = true;
+                if (rule.isUniversal()) break;
+                if (!rule.getTransactionTypes().contains(transactionType)) {
+                    cancel = true;
+                    break;
+                }
             }
         }
 

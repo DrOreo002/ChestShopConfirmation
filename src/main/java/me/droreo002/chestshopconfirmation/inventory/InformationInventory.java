@@ -2,14 +2,14 @@ package me.droreo002.chestshopconfirmation.inventory;
 
 import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.model.OpenRule;
-import me.droreo002.oreocore.inventory.CustomInventory;
+import me.droreo002.oreocore.inventory.OreoInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
 import me.droreo002.oreocore.utils.item.CustomItem;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import org.bukkit.inventory.ItemStack;
 
-public class InformationInventory extends CustomInventory {
+public class InformationInventory extends OreoInventory {
 
     public InformationInventory(final PluginConfig memory, final OpenRule.TransactionType type) {
         super(27, memory.getIInformationTitle());

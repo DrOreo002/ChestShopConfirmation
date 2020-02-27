@@ -5,19 +5,35 @@ import lombok.Setter;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OpenRule {
 
     @Getter @Setter
     private String world;
     @Getter @Setter
-    private TransactionType transactionType;
+    private List<TransactionType> transactionTypes;
 
     public OpenRule(String syntax) {
         if (!syntax.contains(":")) throw new IllegalStateException("Invalid OpenRule syntax! (" + syntax + ")");
         String[] sp = syntax.split(":");
         if (sp.length != 2) throw new IllegalStateException("Invalid OpenRule syntax! (" + syntax + ")");
         this.world = sp[0];
-        this.transactionType = TransactionType.tryGet(sp[1]);
+        this.transactionTypes = new ArrayList<>();
+        for (String s : sp[1].split(",")) {
+            this.transactionTypes.add(TransactionType.tryGet(s));
+        }
+    }
+
+    /**
+     * Check if this is a universal transaction type
+     * or contains ALL
+     *
+     * @return True if universal, false otherwise
+     */
+    public boolean isUniversal() {
+        return transactionTypes.contains(TransactionType.ALL);
     }
 
     public enum TransactionType {
