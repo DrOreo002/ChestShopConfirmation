@@ -32,7 +32,7 @@ public class PlayerData {
         final PlayerDatabase playerDatabase = ChestShopConfirmation.getInstance().getPlayerDatabase();
 
         data.getConfig().set("Data.confirmationDisabled", this.confirmationDisabled);
-        final List<String> toSet = LocationUtils.convertToStrings(disabledShops);
+        final List<String> toSet = LocationUtils.toStringList(disabledShops);
         data.getConfig().set("Data.disabledShops", toSet);
 
         playerDatabase.saveData(data);

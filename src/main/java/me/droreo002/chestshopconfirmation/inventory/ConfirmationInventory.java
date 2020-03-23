@@ -26,7 +26,7 @@ import org.bukkit.material.Sign;
 
 import java.util.List;
 
-import static me.droreo002.oreocore.utils.item.CustomItem.fromSection;
+import static me.droreo002.oreocore.utils.item.ItemStackBuilder.deserialize;
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
 
 public class ConfirmationInventory extends OreoInventory {
@@ -80,14 +80,14 @@ public class ConfirmationInventory extends OreoInventory {
         }
 
         setTitle(placeholder.format(memory.getIConfirmTitle()));
-        final ItemStack fillItem = fromSection(memory.getIConfirmFillItem(), null);
-        final ItemStack acceptButton = fromSection(memory.getIConfirmAcceptButton(), placeholder);
-        final ItemStack declineButton = fromSection(memory.getIConfirmDeclineButton(), placeholder);
+        final ItemStack fillItem = deserialize(memory.getIConfirmFillItem()).build();
+        final ItemStack acceptButton = deserialize(memory.getIConfirmAcceptButton()).applyTextPlaceholder(placeholder).build();
+        final ItemStack declineButton = deserialize(memory.getIConfirmDeclineButton()).applyTextPlaceholder(placeholder).build();
 
         if (memory.isIConfirmFillEmpty()) addBorder(fillItem, false, 0, 1, 2);
 
         if (memory.isIConfirmEnablePreview()) {
-            ItemStack previewButton = fromSection(memory.getIConfirmPreviewButton(), placeholder);
+            ItemStack previewButton = deserialize(memory.getIConfirmPreviewButton()).applyTextPlaceholder(placeholder).build();
             previewButton.setType(shopItem.getType()); // Because the default is AIR
             previewButton.setAmount(shop.getAmount());
 

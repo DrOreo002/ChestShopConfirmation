@@ -25,11 +25,6 @@ public class PlayerDatabase extends DatabaseFlatFile {
     }
 
     @Override
-    public void loadData() {
-        // Do nothing
-    }
-
-    @Override
     public void addDefaults(FileConfiguration fileConfiguration) {
         fileConfiguration.set("Data.confirmationDisabled", false);
         fileConfiguration.set("Data.disabledShops", "{}");
@@ -66,7 +61,7 @@ public class PlayerDatabase extends DatabaseFlatFile {
      * @param uuid Player uuid
      */
     private void registerPlayerData(UUID uuid) {
-        setup(uuid.toString(), true);
+        createData(uuid.toString());
         DataCache data = getDataCache(uuid.toString());
         playerData.add(new PlayerData(uuid, data));
     }

@@ -4,10 +4,11 @@ import me.droreo002.chestshopconfirmation.config.PluginConfig;
 import me.droreo002.chestshopconfirmation.model.OpenRule;
 import me.droreo002.oreocore.inventory.OreoInventory;
 import me.droreo002.oreocore.inventory.button.GUIButton;
-import me.droreo002.oreocore.utils.item.CustomItem;
 import me.droreo002.oreocore.utils.item.helper.ItemMetaType;
 import me.droreo002.oreocore.utils.item.helper.TextPlaceholder;
 import org.bukkit.inventory.ItemStack;
+
+import static me.droreo002.oreocore.utils.item.ItemStackBuilder.deserialize;
 
 public class InformationInventory extends OreoInventory {
 
@@ -20,8 +21,8 @@ public class InformationInventory extends OreoInventory {
 
         final TextPlaceholder placeholder = new TextPlaceholder(ItemMetaType.LORE, "%transaction_type%", type.asTranslatedString());
 
-        final ItemStack infoSign = CustomItem.fromSection(memory.getIInformationInfoButton(), placeholder);
-        final ItemStack fill = CustomItem.fromSection(memory.getIInformationFillItem(), null);
+        final ItemStack infoSign = deserialize(memory.getIInformationInfoButton()).applyTextPlaceholder(placeholder).build();
+        final ItemStack fill = deserialize(memory.getIInformationFillItem()).build();
 
         if (memory.isIInformationFillEmpty()) addBorder(fill, false, 0, 1, 2);
 

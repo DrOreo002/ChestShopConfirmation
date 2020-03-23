@@ -7,6 +7,7 @@ import me.droreo002.oreocore.commands.CustomCommand;
 import me.droreo002.oreocore.database.object.DatabaseFlatFile;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
 import java.util.Set;
 
 import static me.droreo002.oreocore.utils.strings.StringUtils.color;
@@ -26,7 +27,7 @@ public class LoadedDataCommand extends CommandArg {
     public void execute(CommandSender commandSender, String[] strings) {
         sendMessage(commandSender, "Loaded datas: ");
         // Only take the previews
-        Set<DatabaseFlatFile.DataCache> values = plugin.getPlayerDatabase().getDataCaches();
+        List<DatabaseFlatFile.DataCache> values = plugin.getPlayerDatabase().getDataCaches();
         if (values.isEmpty()) {
             commandSender.sendMessage(color("    &7> &fNo loaded data found"));
             return;
