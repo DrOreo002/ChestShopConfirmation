@@ -138,6 +138,7 @@ public class CoreListener implements Listener {
         }
 
         final Shop shop = new Shop(sign, owner, amount, item, price, transactionType);
+        event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
         ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> {
             input.open(client);
             plugin.getShopDelayer().add(client);
