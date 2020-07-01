@@ -73,7 +73,7 @@ public class ChestShopConfirmation extends JavaPlugin {
         debug.log("&7> &fSetting up config.yml....", Level.INFO, false, true);
         debug.log("&7> &fRegistering commands...", Level.INFO, false, true);
         debug.log("&7> &fFinish!", Level.INFO, false, true);
-        if (!Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is offline!. Please enable on ChestShop's config.yml to prevent duplication issue!, built-in anti duplication has been &aenabled!", Level.INFO, false, true);
+        if (Properties.TURN_OFF_HOPPER_PROTECTION) debug.log("&7> &cHopper protection is disabled!. Please make sure to enable it to prevent duplication issue by setting it to &cfalse", Level.INFO, false, true);
         out.println(" ");
         debug.log("&8&m+----------------------------------------------------+", Level.INFO, false, true);
         mainCommand = new CShopConfirmationCommand(this);

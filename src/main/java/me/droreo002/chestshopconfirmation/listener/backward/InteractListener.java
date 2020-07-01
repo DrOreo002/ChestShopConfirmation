@@ -2,7 +2,7 @@ package me.droreo002.chestshopconfirmation.listener.backward;
 
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
 import me.droreo002.chestshopconfirmation.config.PluginConfig;
-import me.droreo002.oreocore.utils.item.complex.UMaterial;
+import me.droreo002.oreocore.utils.item.complex.XMaterial;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public class InteractListener implements OnInteractHandler {
         if (event.getHand() == EquipmentSlot.OFF_HAND) return;
         if (event.getClickedBlock() == null) return;
         final Material clickType = event.getClickedBlock().getType();
-        if (!clickType.equals(UMaterial.CHEST.getMaterial())
+        if (!clickType.equals(XMaterial.CHEST.getMaterial())
                 && !clickType.toString().contains("SIGN")) return;
         final Player player = event.getPlayer();
         final Block block = event.getClickedBlock();

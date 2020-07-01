@@ -109,6 +109,8 @@ public class ConfirmationInventory extends OreoInventory {
 
         addButton(new GUIButton(acceptButton, memory.getIConfirmAcceptButtonSlot()).addListener(inventoryClickEvent -> {
             closeInventory(player);
+            plugin.getShopDelayer().add(player);
+
             TransactionEvent toCall = new TransactionEvent(event, shop.getSign());
             ServerUtils.callEvent(toCall);
 

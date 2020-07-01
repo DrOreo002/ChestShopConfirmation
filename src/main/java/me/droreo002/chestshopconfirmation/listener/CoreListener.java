@@ -37,7 +37,7 @@ public class CoreListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPre(PreTransactionEvent event) {
         final PluginConfig memory = plugin.getPluginConfig();
         if (!memory.isEnableConfirmation()) return;
@@ -139,10 +139,7 @@ public class CoreListener implements Listener {
 
         final Shop shop = new Shop(sign, owner, amount, item, price, transactionType);
         event.setCancelled(PreTransactionEvent.TransactionOutcome.OTHER);
-        ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> {
-            input.open(client);
-            plugin.getShopDelayer().add(client);
-        }).execute();
+        ThreadingUtils.makeChain().asyncFirst(() -> new ConfirmationInventory(client, memory, shop, event)).asyncLast(input -> input.open(client)).execute();
     }
 
     @EventHandler(priority = EventPriority.LOW)
