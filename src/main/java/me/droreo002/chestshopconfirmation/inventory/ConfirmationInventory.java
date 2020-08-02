@@ -156,8 +156,7 @@ public class ConfirmationInventory extends OreoInventory {
     private Block getAttached() {
         // Add to chest on use
         Block attached;
-        if (ServerUtils.getServerVersion() == MinecraftVersion.V1_14_R1
-                || ServerUtils.getServerVersion() == MinecraftVersion.V1_15_R1) {
+        if (!ServerUtils.isLegacyVersion()) {
             attached = BlockUtil.getAttachedBlock(preTransactionEvent.getSign());
         } else {
             Sign s = (Sign) preTransactionEvent.getSign().getData();
