@@ -2,16 +2,15 @@ package me.droreo002.chestshopconfirmation.database;
 
 import lombok.Getter;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.oreocore.database.object.DatabaseFlatFile;
+import me.droreo002.oreocore.database.FlatFileDatabase;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class PlayerDatabase extends DatabaseFlatFile {
+public class PlayerDatabase extends FlatFileDatabase {
 
     @Getter
     private final Set<PlayerData> playerData;

@@ -3,7 +3,7 @@ package me.droreo002.chestshopconfirmation.database;
 import lombok.Getter;
 import lombok.Setter;
 import me.droreo002.chestshopconfirmation.ChestShopConfirmation;
-import me.droreo002.oreocore.database.object.DatabaseFlatFile;
+import me.droreo002.oreocore.database.FlatFileDatabase;
 import me.droreo002.oreocore.utils.world.LocationUtils;
 import org.bukkit.Location;
 
@@ -15,13 +15,13 @@ public class PlayerData {
     @Getter
     private final UUID playerUuid;
     @Getter
-    private final DatabaseFlatFile.DataCache data;
+    private final FlatFileDatabase.DataCache data;
     @Getter @Setter
     private boolean confirmationDisabled;
     @Getter @Setter
     private List<Location> disabledShops;
 
-    public PlayerData(UUID playerUuid, DatabaseFlatFile.DataCache data) {
+    public PlayerData(UUID playerUuid, FlatFileDatabase.DataCache data) {
         this.playerUuid = playerUuid;
         this.data = data;
         this.confirmationDisabled = data.getConfig().getBoolean("Data.confirmationDisabled");

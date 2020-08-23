@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.1-R0.1-SNAPSHOT'
-    compileOnly 'me.droreo002:OreoCore:15.5'
+    compileOnly 'me.droreo002:OreoCore:16.0'
     compileOnly 'com.Acrobot:ChestShop:1.0'
     compileOnly 'org.projectlombok:lombok:1.18.4'
 
